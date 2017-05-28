@@ -1,0 +1,12 @@
+Lonely: Isolated
+Lonely: Abandoned
+Vulnerable: Victimized
+Vulnerable: Fragile
+Despair: Grief
+Despair: Powerless
+Guilty: Ashamed
+Guilty: Remorseful
+Depressed: Empty
+Depressed: Inferior
+Hurt: Disappointed
+Hurt: Embarrassed

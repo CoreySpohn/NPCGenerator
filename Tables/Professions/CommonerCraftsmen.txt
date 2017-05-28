@@ -1,0 +1,47 @@
+Armorer
+Blacksmith
+Bookbinder
+Bowyer (bowmaking)
+Brazier (brassmaking)
+Brewer
+Carpenter
+Cartographer
+Cartwright (woodworking)
+Chandler (candlemaking)
+Cobbler (shoemaking)
+Coffinmaker
+Cooper (woodworking)
+Coppersmith
+Dyer (dyemaking)
+Fletcher (bowmaking)
+Gemcutter
+Glazier (glassmaking)
+Goldsmith
+Haberdasher (hatmaking)
+Horner (hornworking)
+Jeweler
+Locksmith
+Miller
+Painter
+Parchmentmaker (parchmentmaking)
+Pewterer (pewtermaking)
+Potter (potterymaking)
+Roper (roapmaking)
+Rugmaker
+Saddler
+Sculptor
+Seamstress
+Shipwright (shipmaking)
+Silversmith
+Skinner (skinning)
+Soapmaker
+Stonemason
+Tailor
+Tanner
+Toymaker
+Vintner (winemaking)
+Wainwright (wagonmaking)
+Weaponsmith
+Weaver
+Wheelwright (wheelmaking)
+Woodcarver

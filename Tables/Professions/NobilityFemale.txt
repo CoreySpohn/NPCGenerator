@@ -1,0 +1,8 @@
+Baroness
+Court wizard
+Countess
+Duchess
+Lady
+Princess
+Queen
+Steward

@@ -1,0 +1,24 @@
+Barbarian
+Bounty hunter
+Border patrol
+Cavalry
+General
+Gladiator
+Guard
+Herald
+Infantry
+Jailer
+Knight
+Major
+Mercenary
+Officer
+Private
+Raider
+Ranger
+Scout
+Sergeant
+Soldier
+Special forces
+Squire
+Torturer
+Town watch

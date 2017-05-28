@@ -1,0 +1,8 @@
+Steel
+Bronze
+Pewter
+Silver
+Gold
+Platinum
+Copper
+Gemstones

@@ -1,0 +1,20 @@
+a shopkeeper
+a basketweaver
+a grocer
+a peddler
+a beggar
+an urchin
+a barkeep
+a serving girl
+a squire
+a musician
+a madame
+a watchman
+a ship's captain
+a peasant woman
+a fisherman's wife
+a monk
+a sellsword
+a gambler
+some guy in a pub
+a little bird
