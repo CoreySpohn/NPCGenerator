@@ -64,17 +64,15 @@ Eloquent
 Empathetic
 Energetic
 Enthusiastic
-Esthetic
 Exciting
 Extraordinary
 Fair
 Faithful
 Farsighted
-Felicific
 Firm
 Flexible
 Focused
-Forecful
+Forceful
 Forgiving
 Forthright
 Freethinking
@@ -90,7 +88,7 @@ Hardworking
 Healthy
 Hearty
 Helpful
-Herioc
+Heroic
 High-minded
 Honest
 Honorable
@@ -124,7 +122,7 @@ Many-sided
 Masculine  (Manly)
 Mature
 Methodical
-Maticulous
+Meticulous
 Moderate
 Modest
 Multi-leveled
@@ -146,7 +144,6 @@ Perceptive
 Perfectionist
 Personable
 Persuasive
-Planful
 Playful
 Polished
 Popular
@@ -159,7 +156,7 @@ Protective
 Providential
 Prudent
 Punctual
-Pruposeful
+Purposeful
 Rational
 Realistic
 Reflective
@@ -182,7 +179,7 @@ Self-critical
 Self-defacing
 Self-denying
 Self-reliant
-Self-sufficent
+Self-sufficient
 Sensitive
 Sentimental
 Seraphic

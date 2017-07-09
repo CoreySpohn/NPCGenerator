@@ -10,7 +10,7 @@ Anxious
 Apathetic
 Arbitrary
 Argumentative
-Arrogantt
+Arrogant
 Artificial
 Asocial
 Assertive
@@ -20,12 +20,12 @@ Bewildered
 Bizarre
 Bland
 Blunt
-Biosterous
+Boisterous
 Brittle
 Brutal
 Calculating
 Callous
-Cantakerous
+Cantankerous
 Careless
 Cautious
 Charmless
@@ -159,7 +159,7 @@ Naive
 Narcissistic
 Narrow
 Narrow-minded
-Negativistic
+Negative
 Neglectful
 Neurotic
 Nihilistic

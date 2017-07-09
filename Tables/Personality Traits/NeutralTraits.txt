@@ -11,7 +11,7 @@ Breezy
 Businesslike
 Busy
 Casual
-Crebral
+Cerebral
 Chummy
 Circumspect
 Competitive
@@ -41,7 +41,7 @@ Frugal
 Glamorous
 Guileless
 High-spirited
-Huried
+Hurried
 Hypnotic
 Iconoclastic
 Idiosyncratic
@@ -61,7 +61,7 @@ Neutral
 Noncommittal
 Noncompetitive
 Obedient
-Old-fashined
+Old-fashioned
 Ordinary
 Outspoken
 Paternalistic
@@ -105,7 +105,7 @@ Unfathomable
 Unhurried
 Uninhibited
 Unpatriotic
-Unpredicatable
+Unpredictable
 Unreligious
 Unsentimental
 Whimsical
