@@ -2913,9 +2913,17 @@ def SetPreset10():
     ActivePreset.set(10)
 
 def SavePreset1():
-    Preset1Button.config(bg=Color1.get())
-    PresetColor1.set(Color1.get())
+    Preset1Button.config(bg=TempColor1.get())
+    PresetColor1.set(TempColor1.get())
     AllToggles = GetAll()
+    AllToggles[0] = TempColor0.get()
+    AllToggles[1] = TempColor1.get()
+    AllToggles[2] = TempColor2.get()
+    if ActivePreset.get() == 1:
+        Color0.set(TempColor0.get())
+        Color1.set(TempColor1.get())
+        Color2.set(TempColor2.get())
+        SaveColors()
     with open(Preset1Path, "w") as f:
         writer = csv.writer(f)
         writer.writerow(AllToggles)
@@ -4336,8 +4344,6 @@ ReactionButton = tk.Button(ReactionFrame,text="Reaction", bg = Color2.get(),comm
 MotivationButton = tk.Button(MotivationFrame,text="Motivation", bg = Color1.get(),command=MotivationGUI,height=4,width=10)
 NotesButton = tk.Button(NotesFrame, text='Session Notes', bg=Color2.get(), height=4, width=10)
 #RumorButton = tk.Button(root,text="Rumor", bg = '#e2efd9',command=RumorGUI,height=8,width=11)
-
-
 
 ExcelExportButton = tk.Button(ExportFrame,bg = Color0.get(),text="Export to excel. Only exports when this window is closed.",command=ExcelExportGUI,height=3,width=61)
 
