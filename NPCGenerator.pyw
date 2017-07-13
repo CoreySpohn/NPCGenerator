@@ -1665,6 +1665,22 @@ def ElfAgeGen(MinAge,MaxAge):
     Age = random.randint(CalcMin,CalcMax)
     return Age
 
+def ElfHeightGen(MinHeight, MaxHeight):
+    # These are the default min and max elf heights
+    DefaultMin = 48
+    DefaultMax = 60
+    # This is the range and it's used for scaling
+    DefaultRange = DefaultMax - DefaultMin
+    
+    # Get an integer value for the minimum and maximum based on the values
+    # from the GUI's popup menu
+    CalcMin = int(MinHeight * DefaultRange / 100 + DefaultMin)
+    CalcMax = int(MaxHeight * DefaultRange / 100 + DefaultMin)
+    
+    # Get a random age from inbetween the minimum and maximum
+    Height = random.randint(CalcMin,CalcMax)
+    return Height
+
 def ElfRaceGen():
     ElfRaceInt = random.randint(1,100)
     if (ElfRaceInt < 45):
@@ -1721,6 +1737,22 @@ def DwarfAgeGen(MinAge,MaxAge):
     # Get a random age from inbetween the minimum and maximum
     Age = random.randint(CalcMin,CalcMax)
     return Age
+
+def DwarfHeightGen(MinHeight, MaxHeight):
+    # These are the default min and max dwarf heights
+    DefaultMin = 48
+    DefaultMax = 60
+    # This is the range and it's used for scaling
+    DefaultRange = DefaultMax - DefaultMin
+    
+    # Get an integer value for the minimum and maximum based on the values
+    # from the GUI's popup menu
+    CalcMin = int(MinHeight * DefaultRange / 100 + DefaultMin)
+    CalcMax = int(MaxHeight * DefaultRange / 100 + DefaultMin)
+    
+    # Get a random height from inbetween the minimum and maximum
+    Height = random.randint(CalcMin,CalcMax)
+    return Height
 
 def DwarfRaceGen():
     DwarfRaceInt = random.randint(1,100)
@@ -2441,6 +2473,12 @@ with open(DisplayPath) as f:
     reader = csv.reader(f)
     InitialDisplay = next(reader)
 
+ActivePresetPath = 'Tables/Toggles/ActivePreset.csv'
+ActivePresetPath = os.path.join(ScriptDir, ActivePresetPath)
+InitialActivePreset = []
+with open(ActivePresetPath) as f:
+    reader = csv.reader(f)
+    InitialActivePreset = next(reader)
 
 ColorsPath = 'Tables/Toggles/Colors.csv'
 ColorsPath = os.path.join(ScriptDir, ColorsPath)
@@ -2571,6 +2609,8 @@ ShowReaction.set(InitialDisplay[15])
 ShowMotivation.set(InitialDisplay[16])
 ShowNotes.set(InitialDisplay[17])
 ShowExport.set(InitialDisplay[18])
+
+ActivePreset.set(InitialActivePreset[0])
 
 Color0.set(InitialColors[0])
 Color1.set(InitialColors[1])
@@ -2929,76 +2969,149 @@ def SavePreset1():
         writer.writerow(AllToggles)
 
 def SavePreset2():
-    Preset2Button.config(bg=Color1.get())
-    PresetColor2.set(Color1.get())
+    Preset2Button.config(bg=TempColor1.get())
+    PresetColor2.set(TempColor1.get())
     AllToggles = GetAll()
+    AllToggles[0] = TempColor0.get()
+    AllToggles[1] = TempColor1.get()
+    AllToggles[2] = TempColor2.get()
+    if ActivePreset.get() == 1:
+        Color0.set(TempColor0.get())
+        Color1.set(TempColor1.get())
+        Color2.set(TempColor2.get())
+        SaveColors()
     with open(Preset2Path, "w") as f:
         writer = csv.writer(f)
         writer.writerow(AllToggles)
 
 def SavePreset3():
-    Preset3Button.config(bg=Color1.get())
-    PresetColor3.set(Color1.get())
+    Preset3Button.config(bg=TempColor1.get())
+    PresetColor3.set(TempColor1.get())
     AllToggles = GetAll()
+    AllToggles[0] = TempColor0.get()
+    AllToggles[1] = TempColor1.get()
+    AllToggles[2] = TempColor2.get()
+    if ActivePreset.get() == 1:
+        Color0.set(TempColor0.get())
+        Color1.set(TempColor1.get())
+        Color2.set(TempColor2.get())
+        SaveColors()
     with open(Preset3Path, "w") as f:
         writer = csv.writer(f)
         writer.writerow(AllToggles)
         
 def SavePreset4():
-    Preset4Button.config(bg=Color1.get())
-    PresetColor4.set(Color1.get())
+    Preset4Button.config(bg=TempColor1.get())
+    PresetColor4.set(TempColor1.get())
     AllToggles = GetAll()
+    AllToggles[0] = TempColor0.get()
+    AllToggles[1] = TempColor1.get()
+    AllToggles[2] = TempColor2.get()
+    if ActivePreset.get() == 1:
+        Color0.set(TempColor0.get())
+        Color1.set(TempColor1.get())
+        Color2.set(TempColor2.get())
+        SaveColors()
     with open(Preset4Path, "w") as f:
         writer = csv.writer(f)
         writer.writerow(AllToggles)  
         
 def SavePreset5():
-    Preset5Button.config(bg=Color1.get())
-    PresetColor5.set(Color1.get())
+    Preset5Button.config(bg=TempColor1.get())
+    PresetColor5.set(TempColor1.get())
     AllToggles = GetAll()
+    AllToggles[0] = TempColor0.get()
+    AllToggles[1] = TempColor1.get()
+    AllToggles[2] = TempColor2.get()
+    if ActivePreset.get() == 1:
+        Color0.set(TempColor0.get())
+        Color1.set(TempColor1.get())
+        Color2.set(TempColor2.get())
+        SaveColors()
     with open(Preset5Path, "w") as f:
         writer = csv.writer(f)
         writer.writerow(AllToggles)  
 
 def SavePreset6():
-    Preset6Button.config(bg=Color1.get())
-    PresetColor6.set(Color1.get())
+    Preset6Button.config(bg=TempColor1.get())
+    PresetColor6.set(TempColor1.get())
     AllToggles = GetAll()
+    AllToggles[0] = TempColor0.get()
+    AllToggles[1] = TempColor1.get()
+    AllToggles[2] = TempColor2.get()
+    if ActivePreset.get() == 1:
+        Color0.set(TempColor0.get())
+        Color1.set(TempColor1.get())
+        Color2.set(TempColor2.get())
+        SaveColors()
     with open(Preset6Path, "w") as f:
         writer = csv.writer(f)
         writer.writerow(AllToggles)  
         
 def SavePreset7():
-    Preset7Button.config(bg=Color1.get())
-    PresetColor7.set(Color1.get())
+    Preset7Button.config(bg=TempColor1.get())
+    PresetColor7.set(TempColor1.get())
     AllToggles = GetAll()
+    AllToggles[0] = TempColor0.get()
+    AllToggles[1] = TempColor1.get()
+    AllToggles[2] = TempColor2.get()
+    if ActivePreset.get() == 1:
+        Color0.set(TempColor0.get())
+        Color1.set(TempColor1.get())
+        Color2.set(TempColor2.get())
+        SaveColors()
     with open(Preset7Path, "w") as f:
         writer = csv.writer(f)
         writer.writerow(AllToggles)  
 
 def SavePreset8():
-    Preset8Button.config(bg=Color1.get())
-    PresetColor8.set(Color1.get())
+    Preset8Button.config(bg=TempColor1.get())
+    PresetColor8.set(TempColor1.get())
     AllToggles = GetAll()
+    AllToggles[0] = TempColor0.get()
+    AllToggles[1] = TempColor1.get()
+    AllToggles[2] = TempColor2.get()
+    if ActivePreset.get() == 1:
+        Color0.set(TempColor0.get())
+        Color1.set(TempColor1.get())
+        Color2.set(TempColor2.get())
+        SaveColors()
     with open(Preset8Path, "w") as f:
         writer = csv.writer(f)
         writer.writerow(AllToggles)  
         
 def SavePreset9():
-    Preset9Button.config(bg=Color1.get())
-    PresetColor9.set(Color1.get())
+    Preset9Button.config(bg=TempColor1.get())
+    PresetColor9.set(TempColor1.get())
     AllToggles = GetAll()
+    AllToggles[0] = TempColor0.get()
+    AllToggles[1] = TempColor1.get()
+    AllToggles[2] = TempColor2.get()
+    if ActivePreset.get() == 1:
+        Color0.set(TempColor0.get())
+        Color1.set(TempColor1.get())
+        Color2.set(TempColor2.get())
+        SaveColors()
     with open(Preset9Path, "w") as f:
         writer = csv.writer(f)
         writer.writerow(AllToggles)
 
 def SavePreset10():
-    Preset10Button.config(bg=Color1.get())
-    PresetColor10.set(Color1.get())
+    Preset10Button.config(bg=TempColor1.get())
+    PresetColor10.set(TempColor1.get())
     AllToggles = GetAll()
+    AllToggles[0] = TempColor0.get()
+    AllToggles[1] = TempColor1.get()
+    AllToggles[2] = TempColor2.get()
+    if ActivePreset.get() == 1:
+        Color0.set(TempColor0.get())
+        Color1.set(TempColor1.get())
+        Color2.set(TempColor2.get())
+        SaveColors()
     with open(Preset10Path, "w") as f:
         writer = csv.writer(f)
         writer.writerow(AllToggles)
+
 
 # When the tk.Button is right clicked these menus pop up and you can change
 # the name and save the currently selected values to be reloaded later
@@ -3010,6 +3123,7 @@ TempColor2 = tk.StringVar()
         
 def Preset1RC(event):
     top = tk.Toplevel(root)
+    top.title('Preset 1')
     PresetLabel = tk.Label(top, text='Preset name:', width=10)
     PresetLabel.grid(row=0, column=0)
     Preset1Entry = tk.Entry(top, textvariable = Preset1Var, width=20)
@@ -3022,6 +3136,33 @@ def Preset1RC(event):
         Color1Label.config(bg = TempColor1.get())
         Color2Label.config(bg = TempColor2.get())
     
+    def SaveTempColors():
+        # This function is used to save the temporary colors over the old colors
+        # and update the colors shown on the GUI
+        CheckTempColors()
+        Preset1[0] = TempColor0.get()
+        Preset1[1] = TempColor1.get()
+        Preset1[2] = TempColor2.get()
+        Preset1Button.config(bg=TempColor1.get())
+        
+        # This saves the color for the preset button on the main GUI
+        PresetColor1.set(TempColor1.get())
+        Colors = GetColors()
+        with open(ColorsPath, "w") as f:
+            writer = csv.writer(f)
+            writer.writerow(Colors)
+            
+        if ActivePreset.get() == 1:
+            Color0.set(TempColor0.get())
+            Color1.set(TempColor1.get())
+            Color2.set(TempColor2.get())
+            SaveColors()
+        with open(Preset1Path, "w") as f:
+            writer = csv.writer(f)
+            writer.writerow(Preset1)
+        
+    # Get the values for the current preset so that the colors can be overwritten
+    # should you want them to be different
     Preset1 = []
     with open(Preset1Path) as f:
         reader = csv.reader(f)
@@ -3031,6 +3172,7 @@ def Preset1RC(event):
     TempColor1.set(Preset1[1])
     TempColor2.set(Preset1[2])
     
+    # Build the color menu inside the pop up menu
     Color0Label = tk.Label(top,bg = TempColor0.get(), width=10)
     Color1Label = tk.Label(top,bg = TempColor1.get(), width=10)   
     Color2Label = tk.Label(top,bg = TempColor2.get(), width=10)
@@ -3041,11 +3183,13 @@ def Preset1RC(event):
     Color1Entry.config(textvariable = TempColor1)
     Color2Entry.config(textvariable = TempColor2)
     
+    # Create the buttons that let you check colors or save just the colors
     CheckColorsButton = tk.Button(top, text = 'Check colors', bg = TempColor0.get(),
                                   command = CheckTempColors, width=10)
     SaveColorsButton = tk.Button(top, text = 'Save colors', bg = TempColor0.get(),
-                                 command = SaveColors, width=20)
+                                 command = SaveTempColors, width=20)
 
+    # Place the different widgets
     Color0Label.grid(row = 1, column = 0)
     Color1Label.grid(row = 2, column = 0)
     Color2Label.grid(row = 3, column = 0)
@@ -3057,9 +3201,10 @@ def Preset1RC(event):
     CheckColorsButton.grid(row = 4, column=0)
     SaveColorsButton.grid(row=4, column=1)
     
-    Preset1Button = tk.Button(top, text = 'Save current settings', width=31,
+    # Create and place the button that saves all settings
+    PresetSaveButton = tk.Button(top, text = 'Save all current settings', width=31,
                               bg = TempColor0.get(),justify=tk.CENTER,command = SavePreset1)
-    Preset1Button.grid(row=5, columnspan=2)
+    PresetSaveButton.grid(row=5, columnspan=2)
     
     top.grid()
     x = root.winfo_x()
@@ -3068,23 +3213,179 @@ def Preset1RC(event):
 
 def Preset2RC(event):
     top = tk.Toplevel(root)
+    top.title('Preset 2')
     PresetLabel = tk.Label(top, text='Preset name:', width=10)
     PresetLabel.grid(row=0, column=0)
     Preset2Entry = tk.Entry(top, textvariable = Preset2Var, width=20)
     Preset2Entry.grid(row=0, column=1)
-    Preset2Button = tk.Button(top, text = 'Save current settings to new preset',justify=tk.CENTER,command = SavePreset2)
-    Preset2Button.grid(row=5, columnspan=2)
+    
+    def CheckTempColors():
+        # This function is used when the check colors tk.Button is pressed
+        # it'll show what the colors chosen would look like from the labels
+        Color0Label.config(bg = TempColor0.get())
+        Color1Label.config(bg = TempColor1.get())
+        Color2Label.config(bg = TempColor2.get())
+    
+    def SaveTempColors():
+        # This function is used to save the temporary colors over the old colors
+        # and update the colors shown on the GUI
+        CheckTempColors()
+        Preset2[0] = TempColor0.get()
+        Preset2[1] = TempColor1.get()
+        Preset2[2] = TempColor2.get()
+        Preset2Button.config(bg=TempColor1.get())
+        
+        # This saves the color for the preset button on the main GUI
+        PresetColor2.set(TempColor1.get())
+        Colors = GetColors()
+        with open(ColorsPath, "w") as f:
+            writer = csv.writer(f)
+            writer.writerow(Colors)
+            
+        if ActivePreset.get() == 2:
+            Color0.set(TempColor0.get())
+            Color1.set(TempColor1.get())
+            Color2.set(TempColor2.get())
+            SaveColors()
+        with open(Preset2Path, "w") as f:
+            writer = csv.writer(f)
+            writer.writerow(Preset2)
+        
+    # Get the values for the current preset so that the colors can be overwritten
+    # should you want them to be different
+    Preset2 = []
+    with open(Preset2Path) as f:
+        reader = csv.reader(f)
+        Preset2 = next(reader)
+        
+    TempColor0.set(Preset2[0])
+    TempColor1.set(Preset2[1])
+    TempColor2.set(Preset2[2])
+    
+    # Build the color menu inside the pop up menu
+    Color0Label = tk.Label(top,bg = TempColor0.get(), width=10)
+    Color1Label = tk.Label(top,bg = TempColor1.get(), width=10)   
+    Color2Label = tk.Label(top,bg = TempColor2.get(), width=10)
+    Color0Entry = tk.Entry(top, text='Color 1', textvariable = TempColor0, width=20)
+    Color1Entry = tk.Entry(top, text='Color 2', textvariable = TempColor1, width=20)
+    Color2Entry = tk.Entry(top, text='Color 3', textvariable = TempColor2, width=20)
+    Color0Entry.config(textvariable = TempColor0)
+    Color1Entry.config(textvariable = TempColor1)
+    Color2Entry.config(textvariable = TempColor2)
+    
+    # Create the buttons that let you check colors or save just the colors
+    CheckColorsButton = tk.Button(top, text = 'Check colors', bg = TempColor0.get(),
+                                  command = CheckTempColors, width=10)
+    SaveColorsButton = tk.Button(top, text = 'Save colors', bg = TempColor0.get(),
+                                 command = SaveTempColors, width=20)
+
+    # Place the different widgets
+    Color0Label.grid(row = 1, column = 0)
+    Color1Label.grid(row = 2, column = 0)
+    Color2Label.grid(row = 3, column = 0)
+    
+    Color0Entry.grid(row = 1, column = 1)
+    Color1Entry.grid(row = 2, column = 1)
+    Color2Entry.grid(row = 3, column = 1)
+    
+    CheckColorsButton.grid(row = 4, column=0)
+    SaveColorsButton.grid(row=4, column=1)
+    
+    # Create and place the button that saves all settings
+    PresetSaveButton = tk.Button(top, text = 'Save all current settings', width=31,
+                              bg = TempColor0.get(),justify=tk.CENTER,command = SavePreset2)
+    PresetSaveButton.grid(row=5, columnspan=2)
+    
     top.grid()
     x = root.winfo_x()
     y = root.winfo_y()
-    top.geometry("+%d+%d" % (x, y))    
+    top.geometry("+%d+%d" % (x, y))
 
 def Preset3RC(event):
     top = tk.Toplevel(root)
+    top.title('Preset 3')
+    PresetLabel = tk.Label(top, text='Preset name:', width=10)
+    PresetLabel.grid(row=0, column=0)
     Preset3Entry = tk.Entry(top, textvariable = Preset3Var, width=20)
     Preset3Entry.grid(row=0, column=1)
-    Preset3Button = tk.Button(top, text = 'Save current settings to new preset',justify=tk.CENTER,command = SavePreset3)
-    Preset3Button.grid(row=1)
+    
+    def CheckTempColors():
+        # This function is used when the check colors tk.Button is pressed
+        # it'll show what the colors chosen would look like from the labels
+        Color0Label.config(bg = TempColor0.get())
+        Color1Label.config(bg = TempColor1.get())
+        Color2Label.config(bg = TempColor2.get())
+    
+    def SaveTempColors():
+        # This function is used to save the temporary colors over the old colors
+        # and update the colors shown on the GUI
+        CheckTempColors()
+        Preset3[0] = TempColor0.get()
+        Preset3[1] = TempColor1.get()
+        Preset3[2] = TempColor2.get()
+        Preset3Button.config(bg=TempColor1.get())
+        
+        # This saves the color for the preset button on the main GUI
+        PresetColor3.set(TempColor1.get())
+        Colors = GetColors()
+        with open(ColorsPath, "w") as f:
+            writer = csv.writer(f)
+            writer.writerow(Colors)
+            
+        if ActivePreset.get() == 3:
+            Color0.set(TempColor0.get())
+            Color1.set(TempColor1.get())
+            Color2.set(TempColor2.get())
+            SaveColors()
+        with open(Preset3Path, "w") as f:
+            writer = csv.writer(f)
+            writer.writerow(Preset3)
+        
+    # Get the values for the current preset so that the colors can be overwritten
+    # should you want them to be different
+    Preset3 = []
+    with open(Preset3Path) as f:
+        reader = csv.reader(f)
+        Preset3 = next(reader)
+        
+    TempColor0.set(Preset3[0])
+    TempColor1.set(Preset3[1])
+    TempColor2.set(Preset3[2])
+    
+    # Build the color menu inside the pop up menu
+    Color0Label = tk.Label(top,bg = TempColor0.get(), width=10)
+    Color1Label = tk.Label(top,bg = TempColor1.get(), width=10)   
+    Color2Label = tk.Label(top,bg = TempColor2.get(), width=10)
+    Color0Entry = tk.Entry(top, text='Color 1', textvariable = TempColor0, width=20)
+    Color1Entry = tk.Entry(top, text='Color 2', textvariable = TempColor1, width=20)
+    Color2Entry = tk.Entry(top, text='Color 3', textvariable = TempColor2, width=20)
+    Color0Entry.config(textvariable = TempColor0)
+    Color1Entry.config(textvariable = TempColor1)
+    Color2Entry.config(textvariable = TempColor2)
+    
+    # Create the buttons that let you check colors or save just the colors
+    CheckColorsButton = tk.Button(top, text = 'Check colors', bg = TempColor0.get(),
+                                  command = CheckTempColors, width=10)
+    SaveColorsButton = tk.Button(top, text = 'Save colors', bg = TempColor0.get(),
+                                 command = SaveTempColors, width=20)
+
+    # Place the different widgets
+    Color0Label.grid(row = 1, column = 0)
+    Color1Label.grid(row = 2, column = 0)
+    Color2Label.grid(row = 3, column = 0)
+    
+    Color0Entry.grid(row = 1, column = 1)
+    Color1Entry.grid(row = 2, column = 1)
+    Color2Entry.grid(row = 3, column = 1)
+    
+    CheckColorsButton.grid(row = 4, column=0)
+    SaveColorsButton.grid(row=4, column=1)
+    
+    # Create and place the button that saves all settings
+    PresetSaveButton = tk.Button(top, text = 'Save all current settings', width=31,
+                              bg = TempColor0.get(),justify=tk.CENTER,command = SavePreset3)
+    PresetSaveButton.grid(row=5, columnspan=2)
+    
     top.grid()
     x = root.winfo_x()
     y = root.winfo_y()
@@ -3092,10 +3393,89 @@ def Preset3RC(event):
     
 def Preset4RC(event):
     top = tk.Toplevel(root)
+    top.title('Preset 4')
+    PresetLabel = tk.Label(top, text='Preset name:', width=10)
+    PresetLabel.grid(row=0, column=0)
     Preset4Entry = tk.Entry(top, textvariable = Preset4Var, width=20)
     Preset4Entry.grid(row=0, column=1)
-    Preset4Button = tk.Button(top, text = 'Save current settings to new preset',justify=tk.CENTER,command = SavePreset4)
-    Preset4Button.grid(row=1)
+    
+    def CheckTempColors():
+        # This function is used when the check colors tk.Button is pressed
+        # it'll show what the colors chosen would look like from the labels
+        Color0Label.config(bg = TempColor0.get())
+        Color1Label.config(bg = TempColor1.get())
+        Color2Label.config(bg = TempColor2.get())
+    
+    def SaveTempColors():
+        # This function is used to save the temporary colors over the old colors
+        # and update the colors shown on the GUI
+        CheckTempColors()
+        Preset4[0] = TempColor0.get()
+        Preset4[1] = TempColor1.get()
+        Preset4[2] = TempColor2.get()
+        Preset4Button.config(bg=TempColor1.get())
+        
+        # This saves the color for the preset button on the main GUI
+        PresetColor4.set(TempColor1.get())
+        Colors = GetColors()
+        with open(ColorsPath, "w") as f:
+            writer = csv.writer(f)
+            writer.writerow(Colors)
+            
+        if ActivePreset.get() == 4:
+            Color0.set(TempColor0.get())
+            Color1.set(TempColor1.get())
+            Color2.set(TempColor2.get())
+            SaveColors()
+        with open(Preset4Path, "w") as f:
+            writer = csv.writer(f)
+            writer.writerow(Preset4)
+        
+    # Get the values for the current preset so that the colors can be overwritten
+    # should you want them to be different
+    Preset4 = []
+    with open(Preset4Path) as f:
+        reader = csv.reader(f)
+        Preset4 = next(reader)
+        
+    TempColor0.set(Preset4[0])
+    TempColor1.set(Preset4[1])
+    TempColor2.set(Preset4[2])
+    
+    # Build the color menu inside the pop up menu
+    Color0Label = tk.Label(top,bg = TempColor0.get(), width=10)
+    Color1Label = tk.Label(top,bg = TempColor1.get(), width=10)   
+    Color2Label = tk.Label(top,bg = TempColor2.get(), width=10)
+    Color0Entry = tk.Entry(top, text='Color 1', textvariable = TempColor0, width=20)
+    Color1Entry = tk.Entry(top, text='Color 2', textvariable = TempColor1, width=20)
+    Color2Entry = tk.Entry(top, text='Color 3', textvariable = TempColor2, width=20)
+    Color0Entry.config(textvariable = TempColor0)
+    Color1Entry.config(textvariable = TempColor1)
+    Color2Entry.config(textvariable = TempColor2)
+    
+    # Create the buttons that let you check colors or save just the colors
+    CheckColorsButton = tk.Button(top, text = 'Check colors', bg = TempColor0.get(),
+                                  command = CheckTempColors, width=10)
+    SaveColorsButton = tk.Button(top, text = 'Save colors', bg = TempColor0.get(),
+                                 command = SaveTempColors, width=20)
+
+    # Place the different widgets
+    Color0Label.grid(row = 1, column = 0)
+    Color1Label.grid(row = 2, column = 0)
+    Color2Label.grid(row = 3, column = 0)
+    
+    Color0Entry.grid(row = 1, column = 1)
+    Color1Entry.grid(row = 2, column = 1)
+    Color2Entry.grid(row = 3, column = 1)
+    
+    CheckColorsButton.grid(row = 4, column=0)
+    SaveColorsButton.grid(row=4, column=1)
+    
+    # Create and place the button that saves all settings
+    PresetSaveButton = tk.Button(top, text = 'Save all current settings', width=31,
+                              bg = TempColor0.get(),justify=tk.CENTER,command = SavePreset4)
+    PresetSaveButton.grid(row=5, columnspan=2)
+    
     top.grid()
     x = root.winfo_x()
     y = root.winfo_y()
@@ -3103,10 +3483,89 @@ def Preset4RC(event):
     
 def Preset5RC(event):
     top = tk.Toplevel(root)
+    top.title('Preset 5')
+    PresetLabel = tk.Label(top, text='Preset name:', width=10)
+    PresetLabel.grid(row=0, column=0)
     Preset5Entry = tk.Entry(top, textvariable = Preset5Var, width=20)
     Preset5Entry.grid(row=0, column=1)
-    Preset5Button = tk.Button(top, text = 'Save current settings to new preset',justify=tk.CENTER,command = SavePreset5)
-    Preset5Button.grid(row=1)
+    
+    def CheckTempColors():
+        # This function is used when the check colors tk.Button is pressed
+        # it'll show what the colors chosen would look like from the labels
+        Color0Label.config(bg = TempColor0.get())
+        Color1Label.config(bg = TempColor1.get())
+        Color2Label.config(bg = TempColor2.get())
+    
+    def SaveTempColors():
+        # This function is used to save the temporary colors over the old colors
+        # and update the colors shown on the GUI
+        CheckTempColors()
+        Preset5[0] = TempColor0.get()
+        Preset5[1] = TempColor1.get()
+        Preset5[2] = TempColor2.get()
+        Preset5Button.config(bg=TempColor1.get())
+        
+        # This saves the color for the preset button on the main GUI
+        PresetColor5.set(TempColor1.get())
+        Colors = GetColors()
+        with open(ColorsPath, "w") as f:
+            writer = csv.writer(f)
+            writer.writerow(Colors)
+            
+        if ActivePreset.get() == 5:
+            Color0.set(TempColor0.get())
+            Color1.set(TempColor1.get())
+            Color2.set(TempColor2.get())
+            SaveColors()
+        with open(Preset5Path, "w") as f:
+            writer = csv.writer(f)
+            writer.writerow(Preset5)
+        
+    # Get the values for the current preset so that the colors can be overwritten
+    # should you want them to be different
+    Preset5 = []
+    with open(Preset5Path) as f:
+        reader = csv.reader(f)
+        Preset5 = next(reader)
+        
+    TempColor0.set(Preset5[0])
+    TempColor1.set(Preset5[1])
+    TempColor2.set(Preset5[2])
+    
+    # Build the color menu inside the pop up menu
+    Color0Label = tk.Label(top,bg = TempColor0.get(), width=10)
+    Color1Label = tk.Label(top,bg = TempColor1.get(), width=10)   
+    Color2Label = tk.Label(top,bg = TempColor2.get(), width=10)
+    Color0Entry = tk.Entry(top, text='Color 1', textvariable = TempColor0, width=20)
+    Color1Entry = tk.Entry(top, text='Color 2', textvariable = TempColor1, width=20)
+    Color2Entry = tk.Entry(top, text='Color 3', textvariable = TempColor2, width=20)
+    Color0Entry.config(textvariable = TempColor0)
+    Color1Entry.config(textvariable = TempColor1)
+    Color2Entry.config(textvariable = TempColor2)
+    
+    # Create the buttons that let you check colors or save just the colors
+    CheckColorsButton = tk.Button(top, text = 'Check colors', bg = TempColor0.get(),
+                                  command = CheckTempColors, width=10)
+    SaveColorsButton = tk.Button(top, text = 'Save colors', bg = TempColor0.get(),
+                                 command = SaveTempColors, width=20)
+
+    # Place the different widgets
+    Color0Label.grid(row = 1, column = 0)
+    Color1Label.grid(row = 2, column = 0)
+    Color2Label.grid(row = 3, column = 0)
+    
+    Color0Entry.grid(row = 1, column = 1)
+    Color1Entry.grid(row = 2, column = 1)
+    Color2Entry.grid(row = 3, column = 1)
+    
+    CheckColorsButton.grid(row = 4, column=0)
+    SaveColorsButton.grid(row=4, column=1)
+    
+    # Create and place the button that saves all settings
+    PresetSaveButton = tk.Button(top, text = 'Save all current settings', width=31,
+                              bg = TempColor0.get(),justify=tk.CENTER,command = SavePreset5)
+    PresetSaveButton.grid(row=5, columnspan=2)
+    
     top.grid()
     x = root.winfo_x()
     y = root.winfo_y()
@@ -3114,10 +3573,89 @@ def Preset5RC(event):
 
 def Preset6RC(event):
     top = tk.Toplevel(root)
+    top.title('Preset 6')
+    PresetLabel = tk.Label(top, text='Preset name:', width=10)
+    PresetLabel.grid(row=0, column=0)
     Preset6Entry = tk.Entry(top, textvariable = Preset6Var, width=20)
     Preset6Entry.grid(row=0, column=1)
-    Preset6Button = tk.Button(top, text = 'Save current settings to new preset',justify=tk.CENTER,command = SavePreset6)
-    Preset6Button.grid(row=1)
+    
+    def CheckTempColors():
+        # This function is used when the check colors tk.Button is pressed
+        # it'll show what the colors chosen would look like from the labels
+        Color0Label.config(bg = TempColor0.get())
+        Color1Label.config(bg = TempColor1.get())
+        Color2Label.config(bg = TempColor2.get())
+    
+    def SaveTempColors():
+        # This function is used to save the temporary colors over the old colors
+        # and update the colors shown on the GUI
+        CheckTempColors()
+        Preset6[0] = TempColor0.get()
+        Preset6[1] = TempColor1.get()
+        Preset6[2] = TempColor2.get()
+        Preset6Button.config(bg=TempColor1.get())
+        
+        # This saves the color for the preset button on the main GUI
+        PresetColor6.set(TempColor1.get())
+        Colors = GetColors()
+        with open(ColorsPath, "w") as f:
+            writer = csv.writer(f)
+            writer.writerow(Colors)
+            
+        if ActivePreset.get() == 6:
+            Color0.set(TempColor0.get())
+            Color1.set(TempColor1.get())
+            Color2.set(TempColor2.get())
+            SaveColors()
+        with open(Preset6Path, "w") as f:
+            writer = csv.writer(f)
+            writer.writerow(Preset6)
+        
+    # Get the values for the current preset so that the colors can be overwritten
+    # should you want them to be different
+    Preset6 = []
+    with open(Preset6Path) as f:
+        reader = csv.reader(f)
+        Preset6 = next(reader)
+        
+    TempColor0.set(Preset6[0])
+    TempColor1.set(Preset6[1])
+    TempColor2.set(Preset6[2])
+    
+    # Build the color menu inside the pop up menu
+    Color0Label = tk.Label(top,bg = TempColor0.get(), width=10)
+    Color1Label = tk.Label(top,bg = TempColor1.get(), width=10)   
+    Color2Label = tk.Label(top,bg = TempColor2.get(), width=10)
+    Color0Entry = tk.Entry(top, text='Color 1', textvariable = TempColor0, width=20)
+    Color1Entry = tk.Entry(top, text='Color 2', textvariable = TempColor1, width=20)
+    Color2Entry = tk.Entry(top, text='Color 3', textvariable = TempColor2, width=20)
+    Color0Entry.config(textvariable = TempColor0)
+    Color1Entry.config(textvariable = TempColor1)
+    Color2Entry.config(textvariable = TempColor2)
+    
+    # Create the buttons that let you check colors or save just the colors
+    CheckColorsButton = tk.Button(top, text = 'Check colors', bg = TempColor0.get(),
+                                  command = CheckTempColors, width=10)
+    SaveColorsButton = tk.Button(top, text = 'Save colors', bg = TempColor0.get(),
+                                 command = SaveTempColors, width=20)
+
+    # Place the different widgets
+    Color0Label.grid(row = 1, column = 0)
+    Color1Label.grid(row = 2, column = 0)
+    Color2Label.grid(row = 3, column = 0)
+    
+    Color0Entry.grid(row = 1, column = 1)
+    Color1Entry.grid(row = 2, column = 1)
+    Color2Entry.grid(row = 3, column = 1)
+    
+    CheckColorsButton.grid(row = 4, column=0)
+    SaveColorsButton.grid(row=4, column=1)
+    
+    # Create and place the button that saves all settings
+    PresetSaveButton = tk.Button(top, text = 'Save all current settings', width=31,
+                              bg = TempColor0.get(),justify=tk.CENTER,command = SavePreset6)
+    PresetSaveButton.grid(row=5, columnspan=2)
+    
     top.grid()
     x = root.winfo_x()
     y = root.winfo_y()
@@ -3125,10 +3663,89 @@ def Preset6RC(event):
     
 def Preset7RC(event):
     top = tk.Toplevel(root)
+    top.title('Preset 7')
+    PresetLabel = tk.Label(top, text='Preset name:', width=10)
+    PresetLabel.grid(row=0, column=0)
     Preset7Entry = tk.Entry(top, textvariable = Preset7Var, width=20)
     Preset7Entry.grid(row=0, column=1)
-    Preset7Button = tk.Button(top, text = 'Save current settings to new preset',justify=tk.CENTER,command = SavePreset7)
-    Preset7Button.grid(row=1)
+    
+    def CheckTempColors():
+        # This function is used when the check colors tk.Button is pressed
+        # it'll show what the colors chosen would look like from the labels
+        Color0Label.config(bg = TempColor0.get())
+        Color1Label.config(bg = TempColor1.get())
+        Color2Label.config(bg = TempColor2.get())
+    
+    def SaveTempColors():
+        # This function is used to save the temporary colors over the old colors
+        # and update the colors shown on the GUI
+        CheckTempColors()
+        Preset7[0] = TempColor0.get()
+        Preset7[1] = TempColor1.get()
+        Preset7[2] = TempColor2.get()
+        Preset7Button.config(bg=TempColor1.get())
+        
+        # This saves the color for the preset button on the main GUI
+        PresetColor7.set(TempColor1.get())
+        Colors = GetColors()
+        with open(ColorsPath, "w") as f:
+            writer = csv.writer(f)
+            writer.writerow(Colors)
+            
+        if ActivePreset.get() == 7:
+            Color0.set(TempColor0.get())
+            Color1.set(TempColor1.get())
+            Color2.set(TempColor2.get())
+            SaveColors()
+        with open(Preset7Path, "w") as f:
+            writer = csv.writer(f)
+            writer.writerow(Preset7)
+        
+    # Get the values for the current preset so that the colors can be overwritten
+    # should you want them to be different
+    Preset7 = []
+    with open(Preset7Path) as f:
+        reader = csv.reader(f)
+        Preset7 = next(reader)
+        
+    TempColor0.set(Preset7[0])
+    TempColor1.set(Preset7[1])
+    TempColor2.set(Preset7[2])
+    
+    # Build the color menu inside the pop up menu
+    Color0Label = tk.Label(top,bg = TempColor0.get(), width=10)
+    Color1Label = tk.Label(top,bg = TempColor1.get(), width=10)   
+    Color2Label = tk.Label(top,bg = TempColor2.get(), width=10)
+    Color0Entry = tk.Entry(top, text='Color 1', textvariable = TempColor0, width=20)
+    Color1Entry = tk.Entry(top, text='Color 2', textvariable = TempColor1, width=20)
+    Color2Entry = tk.Entry(top, text='Color 3', textvariable = TempColor2, width=20)
+    Color0Entry.config(textvariable = TempColor0)
+    Color1Entry.config(textvariable = TempColor1)
+    Color2Entry.config(textvariable = TempColor2)
+    
+    # Create the buttons that let you check colors or save just the colors
+    CheckColorsButton = tk.Button(top, text = 'Check colors', bg = TempColor0.get(),
+                                  command = CheckTempColors, width=10)
+    SaveColorsButton = tk.Button(top, text = 'Save colors', bg = TempColor0.get(),
+                                 command = SaveTempColors, width=20)
+
+    # Place the different widgets
+    Color0Label.grid(row = 1, column = 0)
+    Color1Label.grid(row = 2, column = 0)
+    Color2Label.grid(row = 3, column = 0)
+    
+    Color0Entry.grid(row = 1, column = 1)
+    Color1Entry.grid(row = 2, column = 1)
+    Color2Entry.grid(row = 3, column = 1)
+    
+    CheckColorsButton.grid(row = 4, column=0)
+    SaveColorsButton.grid(row=4, column=1)
+    
+    # Create and place the button that saves all settings
+    PresetSaveButton = tk.Button(top, text = 'Save all current settings', width=31,
+                              bg = TempColor0.get(),justify=tk.CENTER,command = SavePreset7)
+    PresetSaveButton.grid(row=5, columnspan=2)
+    
     top.grid()
     x = root.winfo_x()
     y = root.winfo_y()
@@ -3136,10 +3753,89 @@ def Preset7RC(event):
 
 def Preset8RC(event):
     top = tk.Toplevel(root)
+    top.title('Preset 8')
+    PresetLabel = tk.Label(top, text='Preset name:', width=10)
+    PresetLabel.grid(row=0, column=0)
     Preset8Entry = tk.Entry(top, textvariable = Preset8Var, width=20)
     Preset8Entry.grid(row=0, column=1)
-    Preset8Button = tk.Button(top, text = 'Save current settings to new preset',justify=tk.CENTER,command = SavePreset8)
-    Preset8Button.grid(row=1)
+    
+    def CheckTempColors():
+        # This function is used when the check colors tk.Button is pressed
+        # it'll show what the colors chosen would look like from the labels
+        Color0Label.config(bg = TempColor0.get())
+        Color1Label.config(bg = TempColor1.get())
+        Color2Label.config(bg = TempColor2.get())
+    
+    def SaveTempColors():
+        # This function is used to save the temporary colors over the old colors
+        # and update the colors shown on the GUI
+        CheckTempColors()
+        Preset8[0] = TempColor0.get()
+        Preset8[1] = TempColor1.get()
+        Preset8[2] = TempColor2.get()
+        Preset8Button.config(bg=TempColor1.get())
+        
+        # This saves the color for the preset button on the main GUI
+        PresetColor8.set(TempColor1.get())
+        Colors = GetColors()
+        with open(ColorsPath, "w") as f:
+            writer = csv.writer(f)
+            writer.writerow(Colors)
+            
+        if ActivePreset.get() == 8:
+            Color0.set(TempColor0.get())
+            Color1.set(TempColor1.get())
+            Color2.set(TempColor2.get())
+            SaveColors()
+        with open(Preset8Path, "w") as f:
+            writer = csv.writer(f)
+            writer.writerow(Preset8)
+        
+    # Get the values for the current preset so that the colors can be overwritten
+    # should you want them to be different
+    Preset8 = []
+    with open(Preset8Path) as f:
+        reader = csv.reader(f)
+        Preset8 = next(reader)
+        
+    TempColor0.set(Preset8[0])
+    TempColor1.set(Preset8[1])
+    TempColor2.set(Preset8[2])
+    
+    # Build the color menu inside the pop up menu
+    Color0Label = tk.Label(top,bg = TempColor0.get(), width=10)
+    Color1Label = tk.Label(top,bg = TempColor1.get(), width=10)   
+    Color2Label = tk.Label(top,bg = TempColor2.get(), width=10)
+    Color0Entry = tk.Entry(top, text='Color 1', textvariable = TempColor0, width=20)
+    Color1Entry = tk.Entry(top, text='Color 2', textvariable = TempColor1, width=20)
+    Color2Entry = tk.Entry(top, text='Color 3', textvariable = TempColor2, width=20)
+    Color0Entry.config(textvariable = TempColor0)
+    Color1Entry.config(textvariable = TempColor1)
+    Color2Entry.config(textvariable = TempColor2)
+    
+    # Create the buttons that let you check colors or save just the colors
+    CheckColorsButton = tk.Button(top, text = 'Check colors', bg = TempColor0.get(),
+                                  command = CheckTempColors, width=10)
+    SaveColorsButton = tk.Button(top, text = 'Save colors', bg = TempColor0.get(),
+                                 command = SaveTempColors, width=20)
+
+    # Place the different widgets
+    Color0Label.grid(row = 1, column = 0)
+    Color1Label.grid(row = 2, column = 0)
+    Color2Label.grid(row = 3, column = 0)
+    
+    Color0Entry.grid(row = 1, column = 1)
+    Color1Entry.grid(row = 2, column = 1)
+    Color2Entry.grid(row = 3, column = 1)
+    
+    CheckColorsButton.grid(row = 4, column=0)
+    SaveColorsButton.grid(row=4, column=1)
+    
+    # Create and place the button that saves all settings
+    PresetSaveButton = tk.Button(top, text = 'Save all current settings', width=31,
+                              bg = TempColor0.get(),justify=tk.CENTER,command = SavePreset8)
+    PresetSaveButton.grid(row=5, columnspan=2)
+    
     top.grid()
     x = root.winfo_x()
     y = root.winfo_y()
@@ -3147,10 +3843,89 @@ def Preset8RC(event):
     
 def Preset9RC(event):
     top = tk.Toplevel(root)
+    top.title('Preset 9')
+    PresetLabel = tk.Label(top, text='Preset name:', width=10)
+    PresetLabel.grid(row=0, column=0)
     Preset9Entry = tk.Entry(top, textvariable = Preset9Var, width=20)
     Preset9Entry.grid(row=0, column=1)
-    Preset9Button = tk.Button(top, text = 'Save current settings to new preset',justify=tk.CENTER,command = SavePreset9)
-    Preset9Button.grid(row=1)
+    
+    def CheckTempColors():
+        # This function is used when the check colors tk.Button is pressed
+        # it'll show what the colors chosen would look like from the labels
+        Color0Label.config(bg = TempColor0.get())
+        Color1Label.config(bg = TempColor1.get())
+        Color2Label.config(bg = TempColor2.get())
+    
+    def SaveTempColors():
+        # This function is used to save the temporary colors over the old colors
+        # and update the colors shown on the GUI
+        CheckTempColors()
+        Preset9[0] = TempColor0.get()
+        Preset9[1] = TempColor1.get()
+        Preset9[2] = TempColor2.get()
+        Preset9Button.config(bg=TempColor1.get())
+        
+        # This saves the color for the preset button on the main GUI
+        PresetColor9.set(TempColor1.get())
+        Colors = GetColors()
+        with open(ColorsPath, "w") as f:
+            writer = csv.writer(f)
+            writer.writerow(Colors)
+            
+        if ActivePreset.get() == 9:
+            Color0.set(TempColor0.get())
+            Color1.set(TempColor1.get())
+            Color2.set(TempColor2.get())
+            SaveColors()
+        with open(Preset9Path, "w") as f:
+            writer = csv.writer(f)
+            writer.writerow(Preset9)
+        
+    # Get the values for the current preset so that the colors can be overwritten
+    # should you want them to be different
+    Preset9 = []
+    with open(Preset9Path) as f:
+        reader = csv.reader(f)
+        Preset9 = next(reader)
+        
+    TempColor0.set(Preset9[0])
+    TempColor1.set(Preset9[1])
+    TempColor2.set(Preset9[2])
+    
+    # Build the color menu inside the pop up menu
+    Color0Label = tk.Label(top,bg = TempColor0.get(), width=10)
+    Color1Label = tk.Label(top,bg = TempColor1.get(), width=10)   
+    Color2Label = tk.Label(top,bg = TempColor2.get(), width=10)
+    Color0Entry = tk.Entry(top, text='Color 1', textvariable = TempColor0, width=20)
+    Color1Entry = tk.Entry(top, text='Color 2', textvariable = TempColor1, width=20)
+    Color2Entry = tk.Entry(top, text='Color 3', textvariable = TempColor2, width=20)
+    Color0Entry.config(textvariable = TempColor0)
+    Color1Entry.config(textvariable = TempColor1)
+    Color2Entry.config(textvariable = TempColor2)
+    
+    # Create the buttons that let you check colors or save just the colors
+    CheckColorsButton = tk.Button(top, text = 'Check colors', bg = TempColor0.get(),
+                                  command = CheckTempColors, width=10)
+    SaveColorsButton = tk.Button(top, text = 'Save colors', bg = TempColor0.get(),
+                                 command = SaveTempColors, width=20)
+
+    # Place the different widgets
+    Color0Label.grid(row = 1, column = 0)
+    Color1Label.grid(row = 2, column = 0)
+    Color2Label.grid(row = 3, column = 0)
+    
+    Color0Entry.grid(row = 1, column = 1)
+    Color1Entry.grid(row = 2, column = 1)
+    Color2Entry.grid(row = 3, column = 1)
+    
+    CheckColorsButton.grid(row = 4, column=0)
+    SaveColorsButton.grid(row=4, column=1)
+    
+    # Create and place the button that saves all settings
+    PresetSaveButton = tk.Button(top, text = 'Save all current settings', width=31,
+                              bg = TempColor0.get(),justify=tk.CENTER,command = SavePreset9)
+    PresetSaveButton.grid(row=5, columnspan=2)
+    
     top.grid()
     x = root.winfo_x()
     y = root.winfo_y()
@@ -3158,10 +3933,89 @@ def Preset9RC(event):
 
 def Preset10RC(event):
     top = tk.Toplevel(root)
+    top.title('Preset 10')
+    PresetLabel = tk.Label(top, text='Preset name:', width=10)
+    PresetLabel.grid(row=0, column=0)
     Preset10Entry = tk.Entry(top, textvariable = Preset10Var, width=20)
     Preset10Entry.grid(row=0, column=1)
-    Preset10Button = tk.Button(top, text = 'Save current settings to new preset',justify=tk.CENTER,command = SavePreset10)
-    Preset10Button.grid(row=1)
+    
+    def CheckTempColors():
+        # This function is used when the check colors tk.Button is pressed
+        # it'll show what the colors chosen would look like from the labels
+        Color0Label.config(bg = TempColor0.get())
+        Color1Label.config(bg = TempColor1.get())
+        Color2Label.config(bg = TempColor2.get())
+    
+    def SaveTempColors():
+        # This function is used to save the temporary colors over the old colors
+        # and update the colors shown on the GUI
+        CheckTempColors()
+        Preset10[0] = TempColor0.get()
+        Preset10[1] = TempColor1.get()
+        Preset10[2] = TempColor2.get()
+        Preset10Button.config(bg=TempColor1.get())
+        
+        # This saves the color for the preset button on the main GUI
+        PresetColor10.set(TempColor1.get())
+        Colors = GetColors()
+        with open(ColorsPath, "w") as f:
+            writer = csv.writer(f)
+            writer.writerow(Colors)
+            
+        if ActivePreset.get() == 10:
+            Color0.set(TempColor0.get())
+            Color1.set(TempColor1.get())
+            Color2.set(TempColor2.get())
+            SaveColors()
+        with open(Preset10Path, "w") as f:
+            writer = csv.writer(f)
+            writer.writerow(Preset10)
+        
+    # Get the values for the current preset so that the colors can be overwritten
+    # should you want them to be different
+    Preset10 = []
+    with open(Preset10Path) as f:
+        reader = csv.reader(f)
+        Preset10 = next(reader)
+        
+    TempColor0.set(Preset10[0])
+    TempColor1.set(Preset10[1])
+    TempColor2.set(Preset10[2])
+    
+    # Build the color menu inside the pop up menu
+    Color0Label = tk.Label(top,bg = TempColor0.get(), width=10)
+    Color1Label = tk.Label(top,bg = TempColor1.get(), width=10)   
+    Color2Label = tk.Label(top,bg = TempColor2.get(), width=10)
+    Color0Entry = tk.Entry(top, text='Color 1', textvariable = TempColor0, width=20)
+    Color1Entry = tk.Entry(top, text='Color 2', textvariable = TempColor1, width=20)
+    Color2Entry = tk.Entry(top, text='Color 3', textvariable = TempColor2, width=20)
+    Color0Entry.config(textvariable = TempColor0)
+    Color1Entry.config(textvariable = TempColor1)
+    Color2Entry.config(textvariable = TempColor2)
+    
+    # Create the buttons that let you check colors or save just the colors
+    CheckColorsButton = tk.Button(top, text = 'Check colors', bg = TempColor0.get(),
+                                  command = CheckTempColors, width=10)
+    SaveColorsButton = tk.Button(top, text = 'Save colors', bg = TempColor0.get(),
+                                 command = SaveTempColors, width=20)
+
+    # Place the different widgets
+    Color0Label.grid(row = 1, column = 0)
+    Color1Label.grid(row = 2, column = 0)
+    Color2Label.grid(row = 3, column = 0)
+    
+    Color0Entry.grid(row = 1, column = 1)
+    Color1Entry.grid(row = 2, column = 1)
+    Color2Entry.grid(row = 3, column = 1)
+    
+    CheckColorsButton.grid(row = 4, column=0)
+    SaveColorsButton.grid(row=4, column=1)
+    
+    # Create and place the button that saves all settings
+    PresetSaveButton = tk.Button(top, text = 'Save all current settings', width=31,
+                              bg = TempColor0.get(),justify=tk.CENTER,command = SavePreset10)
+    PresetSaveButton.grid(row=5, columnspan=2)
+    
     top.grid()
     x = root.winfo_x()
     y = root.winfo_y()
@@ -3645,6 +4499,9 @@ def SaveToggles():
     with open(DisplayPath, "w") as f:
         writer = csv.writer(f)
         writer.writerow(Display)
+    with open(ActivePresetPath, "w") as f:
+        writer = csv.writer(f)
+        writer.writerow([ActivePreset.get()])
     with open(PresetsPath, "w") as f:
         writer = csv.writer(f)
         writer.writerow(Presets)
