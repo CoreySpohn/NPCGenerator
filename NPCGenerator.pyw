@@ -645,7 +645,7 @@ Table of Contents:
 def ExcelWrite(NameList,n1,wb,Name,Age,Gender,Race,FaceDescription,\
                 PhysicalDescription,AccessoriesDescription,VoiceSpeed,\
                 VoiceQuality,Profession,CalmTrait,StressedTrait,Mood,Reaction,\
-                Motivation,Color1,Color2):  
+                Motivation,Notes,Color1,Color2):  
     if (n1 > 0):
         #This loop is so that if the same name is generated it doesn't crash and they are distinguishable
         i=2
@@ -659,7 +659,7 @@ def ExcelWrite(NameList,n1,wb,Name,Age,Gender,Race,FaceDescription,\
                 cutoff=1+jlen
                 Name = Name[:-cutoff] + ' ' + str(i)
             i = i + 1   
-
+    
     ws = wb.add_worksheet(Name)
     
     style0 = wb.add_format() # Create the style for odd rows
@@ -694,6 +694,9 @@ def ExcelWrite(NameList,n1,wb,Name,Age,Gender,Race,FaceDescription,\
     # Row 14        Motivation
     # Row 15        Session notes
     
+    Display = GetDisplay()
+    # This is a stub until I add the height and weight
+    
     ws.merge_range('A1:A3', Name, style1)
     ws.write(0, 1, str(Age), style0)
     ws.write(1, 1, Gender, style0)
@@ -724,7 +727,7 @@ def ExcelWrite(NameList,n1,wb,Name,Age,Gender,Race,FaceDescription,\
     ws.write(13, 1,Motivation, style0)
     
     ws.write(14, 0,'Session Notes', style2)
-    ws.write(14, 1, '\n', style2)
+    ws.write(14, 1,Notes, style2)
     
     ws.set_column('A:A', 12.86)
     ws.set_column('B:B', 33)
@@ -2163,7 +2166,7 @@ Mood = tk.StringVar()
 Reaction = tk.StringVar()
 Motivation = tk.StringVar()
 Rumor = tk.StringVar()
-
+Notes = tk.StringVar()
 
 ##
 # These are used in the pop up menus
@@ -2173,6 +2176,32 @@ Rumor = tk.StringVar()
 Color0 = tk.StringVar()
 Color1 = tk.StringVar()
 Color2 = tk.StringVar()
+
+# Variables used to determine which panels are shown
+ShowPresets = tk.IntVar()
+ShowRandomNPC = tk.IntVar()
+ShowName = tk.IntVar()
+ShowAge = tk.IntVar()
+ShowGender = tk.IntVar()
+ShowRace = tk.IntVar()
+ShowVoiceSpeed = tk.IntVar()
+ShowVoiceQuality = tk.IntVar()
+ShowFaceDescription = tk.IntVar()
+ShowPhysicalDescription = tk.IntVar()
+ShowAccessoryDescription = tk.IntVar()
+ShowProfession = tk.IntVar()
+ShowCalmTrait = tk.IntVar()
+ShowStressedTrait = tk.IntVar()
+ShowMood = tk.IntVar()
+ShowReaction = tk.IntVar()
+ShowMotivation = tk.IntVar()
+ShowNotes = tk.IntVar()
+ShowExport = tk.IntVar()
+
+# Active preset variable, used to keep track of the large button
+ActivePreset = tk.IntVar()
+
+# Variables used to save the colors of the buttons for the presets
 PresetColor1 = tk.StringVar()
 PresetColor2 = tk.StringVar()
 PresetColor3 = tk.StringVar()
@@ -2184,7 +2213,7 @@ PresetColor8 = tk.StringVar()
 PresetColor9 = tk.StringVar()
 PresetColor10 = tk.StringVar()
 
-# Name Generator variables
+# Variables used to save the names of the presets
 Preset1Var = tk.StringVar()
 Preset2Var = tk.StringVar()
 Preset3Var = tk.StringVar()
@@ -2318,6 +2347,15 @@ def GetAll():
                 QuestEnemyMotivationVar.get(),QuestTreasureMotivationVar.get()]
     return AllCurrentVariables
     
+def GetDisplay():
+    Display = [ShowPresets.get(), ShowRandomNPC.get(), ShowName.get(), ShowAge.get(), ShowGender.get(),
+               ShowRace.get(), ShowVoiceSpeed.get(), ShowVoiceQuality.get(),
+               ShowFaceDescription.get(), ShowPhysicalDescription.get(),
+               ShowAccessoryDescription.get(), ShowProfession.get(),
+               ShowCalmTrait.get(), ShowStressedTrait.get(), ShowMood.get(),
+               ShowReaction.get(), ShowMotivation.get(), ShowNotes.get(), ShowExport.get()]
+    return Display
+
 def GetPresets():
     Presets = [Preset1Var.get(), Preset2Var.get(), Preset3Var.get(), Preset4Var.get(),Preset5Var.get(),
                Preset6Var.get(),Preset7Var.get(),Preset8Var.get(),Preset9Var.get(),Preset10Var.get()]
@@ -2396,6 +2434,14 @@ def GetMotivationToggles():
 # first read in the files that will be saved from last time
 #
 #####
+DisplayPath = 'Tables/Toggles/Display.csv'
+DisplayPath = os.path.join(ScriptDir, DisplayPath)
+InitialDisplay = []
+with open(DisplayPath) as f:
+    reader = csv.reader(f)
+    InitialDisplay = next(reader)
+
+
 ColorsPath = 'Tables/Toggles/Colors.csv'
 ColorsPath = os.path.join(ScriptDir, ColorsPath)
 InitialColors = []
@@ -2505,6 +2551,26 @@ with open(MotivationPath) as f:
 # Set all of the toggle variables to be what they
 # were last time the program was run
 ###
+
+ShowPresets.set(InitialDisplay[0])
+ShowRandomNPC.set(InitialDisplay[1])
+ShowName.set(InitialDisplay[2])
+ShowAge.set(InitialDisplay[3])
+ShowGender.set(InitialDisplay[4])
+ShowRace.set(InitialDisplay[5])
+ShowVoiceSpeed.set(InitialDisplay[6])
+ShowVoiceQuality.set(InitialDisplay[7])
+ShowFaceDescription.set(InitialDisplay[8])
+ShowPhysicalDescription.set(InitialDisplay[9])
+ShowAccessoryDescription.set(InitialDisplay[10])
+ShowProfession.set(InitialDisplay[11])
+ShowCalmTrait.set(InitialDisplay[12])
+ShowStressedTrait.set(InitialDisplay[13])
+ShowMood.set(InitialDisplay[14])
+ShowReaction.set(InitialDisplay[15])
+ShowMotivation.set(InitialDisplay[16])
+ShowNotes.set(InitialDisplay[17])
+ShowExport.set(InitialDisplay[18])
 
 Color0.set(InitialColors[0])
 Color1.set(InitialColors[1])
@@ -2644,447 +2710,457 @@ if (n1.get() == 0):
     
 # The RC functions are what happens when the tk.Button is right clicked 
 # that gives you options on what factors to choose from
-def AllRC(event):
-    '''
-    When the all new character generator is right clicked it pulls up a menu with
-    4 different preset options.  They can be set and saved so that durring the
-    game you can choose people based on where you are better
-    '''
-    Preset1Path = 'Tables/Presets/Preset1.csv'
-    Preset1Path = os.path.join(ScriptDir, Preset1Path)
-    Preset2Path = 'Tables/Presets/Preset2.csv'
-    Preset2Path = os.path.join(ScriptDir, Preset2Path)
-    Preset3Path = 'Tables/Presets/Preset3.csv'
-    Preset3Path = os.path.join(ScriptDir, Preset3Path)
-    Preset4Path = 'Tables/Presets/Preset4.csv'
-    Preset4Path = os.path.join(ScriptDir, Preset4Path)
-    Preset5Path = 'Tables/Presets/Preset5.csv'
-    Preset5Path = os.path.join(ScriptDir, Preset5Path)
-    Preset6Path = 'Tables/Presets/Preset6.csv'
-    Preset6Path = os.path.join(ScriptDir, Preset6Path)
-    Preset7Path = 'Tables/Presets/Preset7.csv'
-    Preset7Path = os.path.join(ScriptDir, Preset7Path)
-    Preset8Path = 'Tables/Presets/Preset8.csv'
-    Preset8Path = os.path.join(ScriptDir, Preset8Path)
-    Preset9Path = 'Tables/Presets/Preset9.csv'
-    Preset9Path = os.path.join(ScriptDir, Preset9Path)
-    Preset10Path = 'Tables/Presets/Preset10.csv'
-    Preset10Path = os.path.join(ScriptDir, Preset10Path)
-    
-    def SetPreset(Preset):
-        '''
-        This takes a list of values and saves the current values them to the
-        active variables in the program
-        '''
-        Color0.set(Preset[0])
-        Color1.set(Preset[1])
-        Color2.set(Preset[2])
-        HumanNameGen1Var.set(int(Preset[3]))
-        HumanNameGen2Var.set(int(Preset[4]))
-        HumanNameGen3Var.set(int(Preset[5]))
-        HumanNameGen4Var.set(int(Preset[6]))
-        MinAge.set(int(Preset[7]))
-        MaxAge.set(int(Preset[8]))
-        MaleVar.set(int(Preset[9]))
-        FemaleVar.set(int(Preset[10]))
-        HumansVar.set(int(Preset[11]))
-        DwarvesVar.set(int(Preset[12]))
-        ElvesVar.set(int(Preset[13]))
-        HalflingsVar.set(int(Preset[14]))
-        HalfElvesVar.set(int(Preset[15]))
-        GnomesVar.set(int(Preset[16]))
-        HalfOrcsVar.set(int(Preset[17]))
-        DragonbornVar.set(int(Preset[18]))
-        TieflingsVar.set(int(Preset[19]))
-        EyeVar.set(int(Preset[20]))
-        EarsVar.set(int(Preset[21]))
-        MouthVar.set(int(Preset[22]))
-        NoseVar.set(int(Preset[23]))
-        ChinOrJawVar.set(int(Preset[24]))
-        HairVar.set(int(Preset[25]))
-        OtherVar.set(int(Preset[26]))
-        HeightVar.set(int(Preset[27]))
-        BodyVar.set(int(Preset[28]))
-        HandsVar.set(int(Preset[29]))
-        ScarVar.set(int(Preset[30]))
-        TattoosVar.set(int(Preset[31]))
-        JeweleryVar.set(int(Preset[32]))
-        ClothesVar.set(int(Preset[33]))
-        CalmPositiveVar.set(int(Preset[34]))
-        CalmNeutralVar.set(int(Preset[35]))
-        CalmNegativeVar.set(int(Preset[36]))
-        StressedPositiveVar.set(int(Preset[37]))
-        StressedNeutralVar.set(int(Preset[38]))
-        StressedNegativeVar.set(int(Preset[39]))
-        CommonerCraftsmenVar.set(int(Preset[40]))
-        CommonerLaborerVar.set(int(Preset[41]))
-        CommonerProfessionsVar.set(int(Preset[42]))
-        FarmersVar.set(int(Preset[43]))
-        MilitaryAndWarriorsVar.set(int(Preset[44]))
-        BureaucratsVar.set(int(Preset[45]))
-        ClergymenVar.set(int(Preset[46]))
-        CriminalsVar.set(int(Preset[47]))
-        AcademicsVar.set(int(Preset[48]))
-        MagiciansVar.set(int(Preset[49]))
-        HappyVar.set(int(Preset[50]))
-        SadVar.set(int(Preset[51]))
-        DisgustedVar.set(int(Preset[52]))
-        AngryVar.set(int(Preset[53]))
-        FearfulVar.set(int(Preset[54]))
-        BadVar.set(int(Preset[55]))
-        SurprisedVar.set(int(Preset[56]))
-        HostileReactionVar.set(int(Preset[57]))
-        UnhappyReactionVar.set(int(Preset[58]))
-        DisgruntledReactionVar.set(int(Preset[59]))
-        IndifferentReactionVar.set(int(Preset[60]))
-        PleasedReactionVar.set(int(Preset[61]))
-        HappyReactionVar.set(int(Preset[62]))
-        FriendlyReactionVar.set(int(Preset[63]))
-        OnTheRunMotivationVar.set(int(Preset[64]))
-        VendettaMotivationVar.set(int(Preset[65]))
-        InformationMotivationVar.set(int(Preset[66]))
-        BuyingOrSellingMotivationVar.set(int(Preset[67]))
-        LocalQuestMotivationVar.set(int(Preset[68]))
-        QuestEnemyMotivationVar.set(int(Preset[69]))
-        QuestTreasureMotivationVar.set(int(Preset[70]))
-    
-    # These programs are used to set the current values to the values saved
-    # as the presets currently
-    def SetPreset1():
-        Preset1 = []
-        with open(Preset1Path) as f:
-            reader = csv.reader(f)
-            Preset1 = next(reader)
-        SetPreset(Preset1)
-        SaveColors()
-        AllGUI()
-    
-    def SetPreset2():
-        Preset2 = []
-        with open(Preset2Path) as f:
-            reader = csv.reader(f)
-            Preset2 = next(reader)
-        SetPreset(Preset2)
-        SaveColors()
-        AllGUI()
-        
-    def SetPreset3():
-        Preset3 = []
-        with open(Preset3Path) as f:
-            reader = csv.reader(f)
-            Preset3 = next(reader)
-        SetPreset(Preset3)
-        SaveColors()
-        AllGUI()
-    
-    def SetPreset4():
-        Preset4 = []
-        with open(Preset4Path) as f:
-            reader = csv.reader(f)
-            Preset4 = next(reader)
-        SetPreset(Preset4)
-        SaveColors()
-        AllGUI()
-    
-    def SetPreset5():
-        Preset5 = []
-        with open(Preset5Path) as f:
-            reader = csv.reader(f)
-            Preset5 = next(reader)
-        SetPreset(Preset5)
-        SaveColors()
-        AllGUI()
-    
-    def SetPreset6():
-        Preset6 = []
-        with open(Preset6Path) as f:
-            reader = csv.reader(f)
-            Preset6 = next(reader)
-        SetPreset(Preset6)
-        SaveColors()
-        AllGUI()
-    
-    def SetPreset7():
-        Preset7 = []
-        with open(Preset7Path) as f:
-            reader = csv.reader(f)
-            Preset7 = next(reader)
-        SetPreset(Preset7)
-        SaveColors()
-        AllGUI()
-     
-    def SetPreset8():
-        Preset8 = []
-        with open(Preset8Path) as f:
-            reader = csv.reader(f)
-            Preset8 = next(reader)
-        SetPreset(Preset8)
-        SaveColors()
-        AllGUI()
-    
-    def SetPreset9():
-        Preset9 = []
-        with open(Preset9Path) as f:
-            reader = csv.reader(f)
-            Preset9 = next(reader)
-        SetPreset(Preset9)
-        SaveColors()
-        AllGUI()
-    
-    def SetPreset10():
-        Preset10 = []
-        with open(Preset10Path) as f:
-            reader = csv.reader(f)
-            Preset10 = next(reader)
-        SetPreset(Preset10)
-        SaveColors()
-        AllGUI()
-    
-    def SavePreset1():
-        Preset1Button.config(bg=Color1.get())
-        PresetColor1.set(Color1.get())
-        AllToggles = GetAll()
-        with open(Preset1Path, "w") as f:
-            writer = csv.writer(f)
-            writer.writerow(AllToggles)
-    
-    def SavePreset2():
-        Preset2Button.config(bg=Color1.get())
-        PresetColor2.set(Color1.get())
-        AllToggles = GetAll()
-        with open(Preset2Path, "w") as f:
-            writer = csv.writer(f)
-            writer.writerow(AllToggles)
-    
-    def SavePreset3():
-        Preset3Button.config(bg=Color1.get())
-        PresetColor3.set(Color1.get())
-        AllToggles = GetAll()
-        with open(Preset3Path, "w") as f:
-            writer = csv.writer(f)
-            writer.writerow(AllToggles)
-            
-    def SavePreset4():
-        Preset4Button.config(bg=Color1.get())
-        PresetColor4.set(Color1.get())
-        AllToggles = GetAll()
-        with open(Preset4Path, "w") as f:
-            writer = csv.writer(f)
-            writer.writerow(AllToggles)  
-            
-    def SavePreset5():
-        Preset5Button.config(bg=Color1.get())
-        PresetColor5.set(Color1.get())
-        AllToggles = GetAll()
-        with open(Preset5Path, "w") as f:
-            writer = csv.writer(f)
-            writer.writerow(AllToggles)  
-    
-    def SavePreset6():
-        Preset6Button.config(bg=Color1.get())
-        PresetColor6.set(Color1.get())
-        AllToggles = GetAll()
-        with open(Preset6Path, "w") as f:
-            writer = csv.writer(f)
-            writer.writerow(AllToggles)  
-            
-    def SavePreset7():
-        Preset7Button.config(bg=Color1.get())
-        PresetColor7.set(Color1.get())
-        AllToggles = GetAll()
-        with open(Preset7Path, "w") as f:
-            writer = csv.writer(f)
-            writer.writerow(AllToggles)  
-    
-    def SavePreset8():
-        Preset8Button.config(bg=Color1.get())
-        PresetColor8.set(Color1.get())
-        AllToggles = GetAll()
-        with open(Preset8Path, "w") as f:
-            writer = csv.writer(f)
-            writer.writerow(AllToggles)  
-            
-    def SavePreset9():
-        Preset9Button.config(bg=Color1.get())
-        PresetColor9.set(Color1.get())
-        AllToggles = GetAll()
-        with open(Preset9Path, "w") as f:
-            writer = csv.writer(f)
-            writer.writerow(AllToggles)
-    
-    def SavePreset10():
-        Preset10Button.config(bg=Color1.get())
-        PresetColor10.set(Color1.get())
-        AllToggles = GetAll()
-        with open(Preset10Path, "w") as f:
-            writer = csv.writer(f)
-            writer.writerow(AllToggles)
-    
-    # When the tk.Button is right clicked these menus pop up and you can change
-    # the name and save the currently selected values to be reloaded later
-    # or during the game.
-    def Preset1RC(event):
-        top = tk.Toplevel(root)
-        Preset1Entry = tk.Entry(top, textvariable = Preset1Var, width=31)
-        Preset1Entry.grid(row=0)
-        Preset1Button = tk.Button(top, text = 'Save current settings to new preset',justify=tk.CENTER,command = SavePreset1)
-        Preset1Button.grid(row=1)
-        top.grid()
-        x = root.winfo_x()
-        y = root.winfo_y()
-        top.geometry("+%d+%d" % (x, y))
-    
-    def Preset2RC(event):
-        top = tk.Toplevel(root)
-        Preset2Entry = tk.Entry(top, textvariable = Preset2Var, width=31)
-        Preset2Entry.grid(row=0)
-        Preset2Button = tk.Button(top, text = 'Save current settings to new preset',justify=tk.CENTER,command = SavePreset2)
-        Preset2Button.grid(row=1)
-        top.grid()
-        x = root.winfo_x()
-        y = root.winfo_y()
-        top.geometry("+%d+%d" % (x, y))    
-    
-    def Preset3RC(event):
-        top = tk.Toplevel(root)
-        Preset3Entry = tk.Entry(top, textvariable = Preset3Var, width=31)
-        Preset3Entry.grid(row=0)
-        Preset3Button = tk.Button(top, text = 'Save current settings to new preset',justify=tk.CENTER,command = SavePreset3)
-        Preset3Button.grid(row=1)
-        top.grid()
-        x = root.winfo_x()
-        y = root.winfo_y()
-        top.geometry("+%d+%d" % (x, y))
-        
-    def Preset4RC(event):
-        top = tk.Toplevel(root)
-        Preset4Entry = tk.Entry(top, textvariable = Preset4Var, width=31)
-        Preset4Entry.grid(row=0)
-        Preset4Button = tk.Button(top, text = 'Save current settings to new preset',justify=tk.CENTER,command = SavePreset4)
-        Preset4Button.grid(row=1)
-        top.grid()
-        x = root.winfo_x()
-        y = root.winfo_y()
-        top.geometry("+%d+%d" % (x, y))
-        
-    def Preset5RC(event):
-        top = tk.Toplevel(root)
-        Preset5Entry = tk.Entry(top, textvariable = Preset5Var, width=31)
-        Preset5Entry.grid(row=0)
-        Preset5Button = tk.Button(top, text = 'Save current settings to new preset',justify=tk.CENTER,command = SavePreset5)
-        Preset5Button.grid(row=1)
-        top.grid()
-        x = root.winfo_x()
-        y = root.winfo_y()
-        top.geometry("+%d+%d" % (x, y))
-    
-    def Preset6RC(event):
-        top = tk.Toplevel(root)
-        Preset6Entry = tk.Entry(top, textvariable = Preset6Var, width=31)
-        Preset6Entry.grid(row=0)
-        Preset6Button = tk.Button(top, text = 'Save current settings to new preset',justify=tk.CENTER,command = SavePreset6)
-        Preset6Button.grid(row=1)
-        top.grid()
-        x = root.winfo_x()
-        y = root.winfo_y()
-        top.geometry("+%d+%d" % (x, y))
-        
-    def Preset7RC(event):
-        top = tk.Toplevel(root)
-        Preset7Entry = tk.Entry(top, textvariable = Preset7Var, width=31)
-        Preset7Entry.grid(row=0)
-        Preset7Button = tk.Button(top, text = 'Save current settings to new preset',justify=tk.CENTER,command = SavePreset7)
-        Preset7Button.grid(row=1)
-        top.grid()
-        x = root.winfo_x()
-        y = root.winfo_y()
-        top.geometry("+%d+%d" % (x, y))
-    
-    def Preset8RC(event):
-        top = tk.Toplevel(root)
-        Preset8Entry = tk.Entry(top, textvariable = Preset8Var, width=31)
-        Preset8Entry.grid(row=0)
-        Preset8Button = tk.Button(top, text = 'Save current settings to new preset',justify=tk.CENTER,command = SavePreset8)
-        Preset8Button.grid(row=1)
-        top.grid()
-        x = root.winfo_x()
-        y = root.winfo_y()
-        top.geometry("+%d+%d" % (x, y))
-        
-    def Preset9RC(event):
-        top = tk.Toplevel(root)
-        Preset9Entry = tk.Entry(top, textvariable = Preset9Var, width=31)
-        Preset9Entry.grid(row=0)
-        Preset9Button = tk.Button(top, text = 'Save current settings to new preset',justify=tk.CENTER,command = SavePreset9)
-        Preset9Button.grid(row=1)
-        top.grid()
-        x = root.winfo_x()
-        y = root.winfo_y()
-        top.geometry("+%d+%d" % (x, y))
-    
-    def Preset10RC(event):
-        top = tk.Toplevel(root)
-        Preset10Entry = tk.Entry(top, textvariable = Preset10Var, width=31)
-        Preset10Entry.grid(row=0)
-        Preset10Button = tk.Button(top, text = 'Save current settings to new preset',justify=tk.CENTER,command = SavePreset10)
-        Preset10Button.grid(row=1)
-        top.grid()
-        x = root.winfo_x()
-        y = root.winfo_y()
-        top.geometry("+%d+%d" % (x, y))
 
+
+Preset1Path = 'Tables/Presets/Preset1.csv'
+Preset1Path = os.path.join(ScriptDir, Preset1Path)
+Preset2Path = 'Tables/Presets/Preset2.csv'
+Preset2Path = os.path.join(ScriptDir, Preset2Path)
+Preset3Path = 'Tables/Presets/Preset3.csv'
+Preset3Path = os.path.join(ScriptDir, Preset3Path)
+Preset4Path = 'Tables/Presets/Preset4.csv'
+Preset4Path = os.path.join(ScriptDir, Preset4Path)
+Preset5Path = 'Tables/Presets/Preset5.csv'
+Preset5Path = os.path.join(ScriptDir, Preset5Path)
+Preset6Path = 'Tables/Presets/Preset6.csv'
+Preset6Path = os.path.join(ScriptDir, Preset6Path)
+Preset7Path = 'Tables/Presets/Preset7.csv'
+Preset7Path = os.path.join(ScriptDir, Preset7Path)
+Preset8Path = 'Tables/Presets/Preset8.csv'
+Preset8Path = os.path.join(ScriptDir, Preset8Path)
+Preset9Path = 'Tables/Presets/Preset9.csv'
+Preset9Path = os.path.join(ScriptDir, Preset9Path)
+Preset10Path = 'Tables/Presets/Preset10.csv'
+Preset10Path = os.path.join(ScriptDir, Preset10Path)
+
+def SetPreset(Preset):
+    '''
+    This takes a list of values and saves the current values them to the
+    active variables in the program
+    '''
+    Color0.set(Preset[0])
+    Color1.set(Preset[1])
+    Color2.set(Preset[2])
+    HumanNameGen1Var.set(int(Preset[3]))
+    HumanNameGen2Var.set(int(Preset[4]))
+    HumanNameGen3Var.set(int(Preset[5]))
+    HumanNameGen4Var.set(int(Preset[6]))
+    MinAge.set(int(Preset[7]))
+    MaxAge.set(int(Preset[8]))
+    MaleVar.set(int(Preset[9]))
+    FemaleVar.set(int(Preset[10]))
+    HumansVar.set(int(Preset[11]))
+    DwarvesVar.set(int(Preset[12]))
+    ElvesVar.set(int(Preset[13]))
+    HalflingsVar.set(int(Preset[14]))
+    HalfElvesVar.set(int(Preset[15]))
+    GnomesVar.set(int(Preset[16]))
+    HalfOrcsVar.set(int(Preset[17]))
+    DragonbornVar.set(int(Preset[18]))
+    TieflingsVar.set(int(Preset[19]))
+    EyeVar.set(int(Preset[20]))
+    EarsVar.set(int(Preset[21]))
+    MouthVar.set(int(Preset[22]))
+    NoseVar.set(int(Preset[23]))
+    ChinOrJawVar.set(int(Preset[24]))
+    HairVar.set(int(Preset[25]))
+    OtherVar.set(int(Preset[26]))
+    HeightVar.set(int(Preset[27]))
+    BodyVar.set(int(Preset[28]))
+    HandsVar.set(int(Preset[29]))
+    ScarVar.set(int(Preset[30]))
+    TattoosVar.set(int(Preset[31]))
+    JeweleryVar.set(int(Preset[32]))
+    ClothesVar.set(int(Preset[33]))
+    CalmPositiveVar.set(int(Preset[34]))
+    CalmNeutralVar.set(int(Preset[35]))
+    CalmNegativeVar.set(int(Preset[36]))
+    StressedPositiveVar.set(int(Preset[37]))
+    StressedNeutralVar.set(int(Preset[38]))
+    StressedNegativeVar.set(int(Preset[39]))
+    CommonerCraftsmenVar.set(int(Preset[40]))
+    CommonerLaborerVar.set(int(Preset[41]))
+    CommonerProfessionsVar.set(int(Preset[42]))
+    FarmersVar.set(int(Preset[43]))
+    MilitaryAndWarriorsVar.set(int(Preset[44]))
+    BureaucratsVar.set(int(Preset[45]))
+    ClergymenVar.set(int(Preset[46]))
+    CriminalsVar.set(int(Preset[47]))
+    AcademicsVar.set(int(Preset[48]))
+    MagiciansVar.set(int(Preset[49]))
+    HappyVar.set(int(Preset[50]))
+    SadVar.set(int(Preset[51]))
+    DisgustedVar.set(int(Preset[52]))
+    AngryVar.set(int(Preset[53]))
+    FearfulVar.set(int(Preset[54]))
+    BadVar.set(int(Preset[55]))
+    SurprisedVar.set(int(Preset[56]))
+    HostileReactionVar.set(int(Preset[57]))
+    UnhappyReactionVar.set(int(Preset[58]))
+    DisgruntledReactionVar.set(int(Preset[59]))
+    IndifferentReactionVar.set(int(Preset[60]))
+    PleasedReactionVar.set(int(Preset[61]))
+    HappyReactionVar.set(int(Preset[62]))
+    FriendlyReactionVar.set(int(Preset[63]))
+    OnTheRunMotivationVar.set(int(Preset[64]))
+    VendettaMotivationVar.set(int(Preset[65]))
+    InformationMotivationVar.set(int(Preset[66]))
+    BuyingOrSellingMotivationVar.set(int(Preset[67]))
+    LocalQuestMotivationVar.set(int(Preset[68]))
+    QuestEnemyMotivationVar.set(int(Preset[69]))
+    QuestTreasureMotivationVar.set(int(Preset[70]))
+
+# These programs are used to set the current values to the values saved
+# as the presets currently
+def SetPreset1():
+    Preset1 = []
+    with open(Preset1Path) as f:
+        reader = csv.reader(f)
+        Preset1 = next(reader)
+    SetPreset(Preset1)
+    SaveColors()
+    AllGUI()
+    ActivePreset.set(1)
+
+def SetPreset2():
+    Preset2 = []
+    with open(Preset2Path) as f:
+        reader = csv.reader(f)
+        Preset2 = next(reader)
+    SetPreset(Preset2)
+    SaveColors()
+    AllGUI()
+    ActivePreset.set(2)
+    
+def SetPreset3():
+    Preset3 = []
+    with open(Preset3Path) as f:
+        reader = csv.reader(f)
+        Preset3 = next(reader)
+    SetPreset(Preset3)
+    SaveColors()
+    AllGUI()
+    ActivePreset.set(3)
+
+def SetPreset4():
+    Preset4 = []
+    with open(Preset4Path) as f:
+        reader = csv.reader(f)
+        Preset4 = next(reader)
+    SetPreset(Preset4)
+    SaveColors()
+    AllGUI()
+    ActivePreset.set(4)
+
+def SetPreset5():
+    Preset5 = []
+    with open(Preset5Path) as f:
+        reader = csv.reader(f)
+        Preset5 = next(reader)
+    SetPreset(Preset5)
+    SaveColors()
+    AllGUI()
+    ActivePreset.set(5)
+
+def SetPreset6():
+    Preset6 = []
+    with open(Preset6Path) as f:
+        reader = csv.reader(f)
+        Preset6 = next(reader)
+    SetPreset(Preset6)
+    SaveColors()
+    AllGUI()
+    ActivePreset.set(6)
+
+def SetPreset7():
+    Preset7 = []
+    with open(Preset7Path) as f:
+        reader = csv.reader(f)
+        Preset7 = next(reader)
+    SetPreset(Preset7)
+    SaveColors()
+    AllGUI()
+    ActivePreset.set(7)
+ 
+def SetPreset8():
+    Preset8 = []
+    with open(Preset8Path) as f:
+        reader = csv.reader(f)
+        Preset8 = next(reader)
+    SetPreset(Preset8)
+    SaveColors()
+    AllGUI()
+    ActivePreset.set(8)
+
+def SetPreset9():
+    Preset9 = []
+    with open(Preset9Path) as f:
+        reader = csv.reader(f)
+        Preset9 = next(reader)
+    SetPreset(Preset9)
+    SaveColors()
+    AllGUI()
+    ActivePreset.set(9)
+
+def SetPreset10():
+    Preset10 = []
+    with open(Preset10Path) as f:
+        reader = csv.reader(f)
+        Preset10 = next(reader)
+    SetPreset(Preset10)
+    SaveColors()
+    AllGUI()
+    ActivePreset.set(10)
+
+def SavePreset1():
+    Preset1Button.config(bg=Color1.get())
+    PresetColor1.set(Color1.get())
+    AllToggles = GetAll()
+    with open(Preset1Path, "w") as f:
+        writer = csv.writer(f)
+        writer.writerow(AllToggles)
+
+def SavePreset2():
+    Preset2Button.config(bg=Color1.get())
+    PresetColor2.set(Color1.get())
+    AllToggles = GetAll()
+    with open(Preset2Path, "w") as f:
+        writer = csv.writer(f)
+        writer.writerow(AllToggles)
+
+def SavePreset3():
+    Preset3Button.config(bg=Color1.get())
+    PresetColor3.set(Color1.get())
+    AllToggles = GetAll()
+    with open(Preset3Path, "w") as f:
+        writer = csv.writer(f)
+        writer.writerow(AllToggles)
+        
+def SavePreset4():
+    Preset4Button.config(bg=Color1.get())
+    PresetColor4.set(Color1.get())
+    AllToggles = GetAll()
+    with open(Preset4Path, "w") as f:
+        writer = csv.writer(f)
+        writer.writerow(AllToggles)  
+        
+def SavePreset5():
+    Preset5Button.config(bg=Color1.get())
+    PresetColor5.set(Color1.get())
+    AllToggles = GetAll()
+    with open(Preset5Path, "w") as f:
+        writer = csv.writer(f)
+        writer.writerow(AllToggles)  
+
+def SavePreset6():
+    Preset6Button.config(bg=Color1.get())
+    PresetColor6.set(Color1.get())
+    AllToggles = GetAll()
+    with open(Preset6Path, "w") as f:
+        writer = csv.writer(f)
+        writer.writerow(AllToggles)  
+        
+def SavePreset7():
+    Preset7Button.config(bg=Color1.get())
+    PresetColor7.set(Color1.get())
+    AllToggles = GetAll()
+    with open(Preset7Path, "w") as f:
+        writer = csv.writer(f)
+        writer.writerow(AllToggles)  
+
+def SavePreset8():
+    Preset8Button.config(bg=Color1.get())
+    PresetColor8.set(Color1.get())
+    AllToggles = GetAll()
+    with open(Preset8Path, "w") as f:
+        writer = csv.writer(f)
+        writer.writerow(AllToggles)  
+        
+def SavePreset9():
+    Preset9Button.config(bg=Color1.get())
+    PresetColor9.set(Color1.get())
+    AllToggles = GetAll()
+    with open(Preset9Path, "w") as f:
+        writer = csv.writer(f)
+        writer.writerow(AllToggles)
+
+def SavePreset10():
+    Preset10Button.config(bg=Color1.get())
+    PresetColor10.set(Color1.get())
+    AllToggles = GetAll()
+    with open(Preset10Path, "w") as f:
+        writer = csv.writer(f)
+        writer.writerow(AllToggles)
+
+# When the tk.Button is right clicked these menus pop up and you can change
+# the name and save the currently selected values to be reloaded later
+# or during the game.
+
+TempColor0 = tk.StringVar()
+TempColor1 = tk.StringVar()
+TempColor2 = tk.StringVar()
+        
+def Preset1RC(event):
     top = tk.Toplevel(root)
-    top.title('Presets')
+    PresetLabel = tk.Label(top, text='Preset name:', width=10)
+    PresetLabel.grid(row=0, column=0)
+    Preset1Entry = tk.Entry(top, textvariable = Preset1Var, width=20)
+    Preset1Entry.grid(row=0, column=1)
     
-    Preset1Button = tk.Button(top, textvariable = Preset1Var,wraplength = 75, command = SetPreset1,
-                       width = 10,height = 3, bg=PresetColor1.get())
-    Preset1Button.grid(row = 0, column = 0)
-    Preset2Button = tk.Button(top, textvariable = Preset2Var,wraplength = 75, command = SetPreset2,
-                       width = 10,height = 3, bg=PresetColor2.get())
-    Preset2Button.grid(row = 0, column = 1)
-    Preset3Button = tk.Button(top, textvariable = Preset3Var,wraplength = 75, command = SetPreset3,
-                       width = 10,height = 3, bg=PresetColor3.get())
-    Preset3Button.grid(row = 0, column = 2)
-    Preset4Button = tk.Button(top, textvariable = Preset4Var,wraplength = 75, command = SetPreset4,
-                       width = 10,height = 3, bg=PresetColor4.get())
-    Preset4Button.grid(row = 0, column = 3)
-    Preset5Button = tk.Button(top, textvariable = Preset5Var,wraplength = 75, command = SetPreset5,
-                       width = 10,height = 3, bg=PresetColor5.get())
-    Preset5Button.grid(row = 0, column = 4)
-    Preset6Button = tk.Button(top, textvariable = Preset6Var,wraplength = 75, command = SetPreset6,
-                       width = 10,height = 3, bg=PresetColor6.get())
-    Preset6Button.grid(row = 1, column = 0)
-    Preset7Button = tk.Button(top, textvariable = Preset7Var,wraplength = 75, command = SetPreset7,
-                       width = 10,height = 3, bg=PresetColor7.get())
-    Preset7Button.grid(row = 1, column = 1)
-    Preset8Button = tk.Button(top, textvariable = Preset8Var,wraplength = 75, command = SetPreset8,
-                       width = 10,height = 3, bg=PresetColor8.get())
-    Preset8Button.grid(row = 1, column = 2)
-    Preset9Button = tk.Button(top, textvariable = Preset9Var,wraplength = 75, command = SetPreset9,
-                       width = 10,height = 3, bg=PresetColor9.get())
-    Preset9Button.grid(row = 1, column = 3)
-    Preset10Button = tk.Button(top, textvariable = Preset10Var,wraplength = 75, command = SetPreset10,
-                       width = 10,height = 3, bg=PresetColor10.get())
-    Preset10Button.grid(row = 1, column = 4)
+    def CheckTempColors():
+        # This function is used when the check colors tk.Button is pressed
+        # it'll show what the colors chosen would look like from the labels
+        Color0Label.config(bg = TempColor0.get())
+        Color1Label.config(bg = TempColor1.get())
+        Color2Label.config(bg = TempColor2.get())
     
-    Preset1Button.bind("<Button-3>", Preset1RC)
-    Preset2Button.bind("<Button-3>", Preset2RC)
-    Preset3Button.bind("<Button-3>", Preset3RC)
-    Preset4Button.bind("<Button-3>", Preset4RC)
-    Preset5Button.bind("<Button-3>", Preset5RC)
-    Preset6Button.bind("<Button-3>", Preset6RC)
-    Preset7Button.bind("<Button-3>", Preset7RC)
-    Preset8Button.bind("<Button-3>", Preset8RC)
-    Preset9Button.bind("<Button-3>", Preset9RC)
-    Preset10Button.bind("<Button-3>", Preset10RC)
+    Preset1 = []
+    with open(Preset1Path) as f:
+        reader = csv.reader(f)
+        Preset1 = next(reader)
+        
+    TempColor0.set(Preset1[0])
+    TempColor1.set(Preset1[1])
+    TempColor2.set(Preset1[2])
+    
+    Color0Label = tk.Label(top,bg = TempColor0.get(), width=10)
+    Color1Label = tk.Label(top,bg = TempColor1.get(), width=10)   
+    Color2Label = tk.Label(top,bg = TempColor2.get(), width=10)
+    Color0Entry = tk.Entry(top, text='Color 1', textvariable = TempColor0, width=20)
+    Color1Entry = tk.Entry(top, text='Color 2', textvariable = TempColor1, width=20)
+    Color2Entry = tk.Entry(top, text='Color 3', textvariable = TempColor2, width=20)
+    Color0Entry.config(textvariable = TempColor0)
+    Color1Entry.config(textvariable = TempColor1)
+    Color2Entry.config(textvariable = TempColor2)
+    
+    CheckColorsButton = tk.Button(top, text = 'Check colors', bg = TempColor0.get(),
+                                  command = CheckTempColors, width=10)
+    SaveColorsButton = tk.Button(top, text = 'Save colors', bg = TempColor0.get(),
+                                 command = SaveColors, width=20)
+
+    Color0Label.grid(row = 1, column = 0)
+    Color1Label.grid(row = 2, column = 0)
+    Color2Label.grid(row = 3, column = 0)
+    
+    Color0Entry.grid(row = 1, column = 1)
+    Color1Entry.grid(row = 2, column = 1)
+    Color2Entry.grid(row = 3, column = 1)
+    
+    CheckColorsButton.grid(row = 4, column=0)
+    SaveColorsButton.grid(row=4, column=1)
+    
+    Preset1Button = tk.Button(top, text = 'Save current settings', width=31,
+                              bg = TempColor0.get(),justify=tk.CENTER,command = SavePreset1)
+    Preset1Button.grid(row=5, columnspan=2)
+    
     top.grid()
-    # This sets the tk.Toplevel window relative to the
-    # root/main window
     x = root.winfo_x()
-    y = root.winfo_y() - 143
+    y = root.winfo_y()
     top.geometry("+%d+%d" % (x, y))
 
+def Preset2RC(event):
+    top = tk.Toplevel(root)
+    PresetLabel = tk.Label(top, text='Preset name:', width=10)
+    PresetLabel.grid(row=0, column=0)
+    Preset2Entry = tk.Entry(top, textvariable = Preset2Var, width=20)
+    Preset2Entry.grid(row=0, column=1)
+    Preset2Button = tk.Button(top, text = 'Save current settings to new preset',justify=tk.CENTER,command = SavePreset2)
+    Preset2Button.grid(row=5, columnspan=2)
+    top.grid()
+    x = root.winfo_x()
+    y = root.winfo_y()
+    top.geometry("+%d+%d" % (x, y))    
 
+def Preset3RC(event):
+    top = tk.Toplevel(root)
+    Preset3Entry = tk.Entry(top, textvariable = Preset3Var, width=20)
+    Preset3Entry.grid(row=0, column=1)
+    Preset3Button = tk.Button(top, text = 'Save current settings to new preset',justify=tk.CENTER,command = SavePreset3)
+    Preset3Button.grid(row=1)
+    top.grid()
+    x = root.winfo_x()
+    y = root.winfo_y()
+    top.geometry("+%d+%d" % (x, y))
+    
+def Preset4RC(event):
+    top = tk.Toplevel(root)
+    Preset4Entry = tk.Entry(top, textvariable = Preset4Var, width=20)
+    Preset4Entry.grid(row=0, column=1)
+    Preset4Button = tk.Button(top, text = 'Save current settings to new preset',justify=tk.CENTER,command = SavePreset4)
+    Preset4Button.grid(row=1)
+    top.grid()
+    x = root.winfo_x()
+    y = root.winfo_y()
+    top.geometry("+%d+%d" % (x, y))
+    
+def Preset5RC(event):
+    top = tk.Toplevel(root)
+    Preset5Entry = tk.Entry(top, textvariable = Preset5Var, width=20)
+    Preset5Entry.grid(row=0, column=1)
+    Preset5Button = tk.Button(top, text = 'Save current settings to new preset',justify=tk.CENTER,command = SavePreset5)
+    Preset5Button.grid(row=1)
+    top.grid()
+    x = root.winfo_x()
+    y = root.winfo_y()
+    top.geometry("+%d+%d" % (x, y))
+
+def Preset6RC(event):
+    top = tk.Toplevel(root)
+    Preset6Entry = tk.Entry(top, textvariable = Preset6Var, width=20)
+    Preset6Entry.grid(row=0, column=1)
+    Preset6Button = tk.Button(top, text = 'Save current settings to new preset',justify=tk.CENTER,command = SavePreset6)
+    Preset6Button.grid(row=1)
+    top.grid()
+    x = root.winfo_x()
+    y = root.winfo_y()
+    top.geometry("+%d+%d" % (x, y))
+    
+def Preset7RC(event):
+    top = tk.Toplevel(root)
+    Preset7Entry = tk.Entry(top, textvariable = Preset7Var, width=20)
+    Preset7Entry.grid(row=0, column=1)
+    Preset7Button = tk.Button(top, text = 'Save current settings to new preset',justify=tk.CENTER,command = SavePreset7)
+    Preset7Button.grid(row=1)
+    top.grid()
+    x = root.winfo_x()
+    y = root.winfo_y()
+    top.geometry("+%d+%d" % (x, y))
+
+def Preset8RC(event):
+    top = tk.Toplevel(root)
+    Preset8Entry = tk.Entry(top, textvariable = Preset8Var, width=20)
+    Preset8Entry.grid(row=0, column=1)
+    Preset8Button = tk.Button(top, text = 'Save current settings to new preset',justify=tk.CENTER,command = SavePreset8)
+    Preset8Button.grid(row=1)
+    top.grid()
+    x = root.winfo_x()
+    y = root.winfo_y()
+    top.geometry("+%d+%d" % (x, y))
+    
+def Preset9RC(event):
+    top = tk.Toplevel(root)
+    Preset9Entry = tk.Entry(top, textvariable = Preset9Var, width=20)
+    Preset9Entry.grid(row=0, column=1)
+    Preset9Button = tk.Button(top, text = 'Save current settings to new preset',justify=tk.CENTER,command = SavePreset9)
+    Preset9Button.grid(row=1)
+    top.grid()
+    x = root.winfo_x()
+    y = root.winfo_y()
+    top.geometry("+%d+%d" % (x, y))
+
+def Preset10RC(event):
+    top = tk.Toplevel(root)
+    Preset10Entry = tk.Entry(top, textvariable = Preset10Var, width=20)
+    Preset10Entry.grid(row=0, column=1)
+    Preset10Button = tk.Button(top, text = 'Save current settings to new preset',justify=tk.CENTER,command = SavePreset10)
+    Preset10Button.grid(row=1)
+    top.grid()
+    x = root.winfo_x()
+    y = root.winfo_y()
+    top.geometry("+%d+%d" % (x, y))
+
+# This sets the tk.Toplevel window relative to the
+# root/main window
 
 def NameRC(event):
     top = tk.Toplevel(root)
@@ -3538,13 +3614,12 @@ def MotivationRC(event):
     y = root.winfo_y()
     top.geometry("+%d+%d" % (x, y))
 
-
-
 def SaveToggles():
     '''
     Get the current toggles and save them so that next time the 
     program is loaded they will still be there
     '''
+    Display = GetDisplay()
     Presets = GetPresets()
     Names = GetName()
     Ages = GetAges()
@@ -3559,6 +3634,9 @@ def SaveToggles():
     MoodToggles = GetMoodToggles()
     ReactionToggles = GetReactionToggles()
     MotivationToggles = GetMotivationToggles()
+    with open(DisplayPath, "w") as f:
+        writer = csv.writer(f)
+        writer.writerow(Display)
     with open(PresetsPath, "w") as f:
         writer = csv.writer(f)
         writer.writerow(Presets)
@@ -3622,6 +3700,7 @@ def SaveColors():
         MoodFrame.config(bg = Color2.get())
         ReactionFrame.config(bg = Color2.get())
         MotivationFrame.config(bg = Color1.get())
+        NotesFrame.config(bg = Color2.get())
         
         ColorButton.config(bg = Color0.get())
         AllButton.config(bg = Color0.get())
@@ -3640,6 +3719,7 @@ def SaveColors():
         MoodButton.config(bg = Color2.get())
         ReactionButton.config(bg = Color2.get())
         MotivationButton.config(bg = Color1.get())
+        NotesButton.config(bg = Color2.get())
         ExcelExportButton.config(bg = Color0.get())
         
         NameEntry.config(bg = Color1.get())
@@ -3657,6 +3737,7 @@ def SaveColors():
         MoodEntry.config(bg = Color2.get())
         ReactionEntry.config(bg = Color2.get())
         MotivationEntry.config(bg = Color1.get())
+        NotesEntry.config(bg = Color2.get())
         
         Colors = GetColors()
         with open(ColorsPath, "w") as f:
@@ -3669,18 +3750,6 @@ def ColorGUI():
     This is a pop up menu that lets the user choose what colors they want to 
     use.  Like if you want an evil person set it to reds or some shit.
     '''
-    
-    def DefaultGreen():
-        # This is used to restore the colors to my usual ones
-        Color0.set('#bdc3c7')
-        Color1.set('#c5e0b3')
-        Color2.set('#e2efd9')
-
-    def DefaultRed():
-        # I use these colors if I'm making an evil person
-        Color0.set('#bdc3c7')
-        Color1.set('#f5b7a6')
-        Color2.set('#f1937a')
         
     def CheckColors():
         # This function is used when the check colors tk.Button is pressed
@@ -3955,6 +4024,7 @@ def ExcelExportGUI():
     Moodxl = Mood.get()
     Reactionxl = ReactionEntry.get('1.0', tk.END)
     Motivationxl = MotivationEntry.get('1.0', tk.END)
+    Notesxl = NotesEntry.get('1.0', tk.END)
     n1xl = n1.get()
     
     
@@ -3969,9 +4039,213 @@ def ExcelExportGUI():
                               FaceDescriptionxl,PhysicalDescriptionxl,\
                               AccessoryDescriptionxl,VoiceSpeedxl,VoiceQualityxl,\
                               Professionxl,CalmTraitxl,StressedTraitxl,Moodxl,\
-                              Reactionxl,Motivationxl,Color1.get(),Color2.get())
+                              Reactionxl,Motivationxl,Notesxl,Color1.get(),Color2.get())
     NameList.append(CurrentName)
     n1.set(n1.get() + 1)
+
+def FieldsGUI():
+    top = tk.Toplevel(root)
+    top.title('Fields')
+    frame = tk.Frame(top)
+    ShowPresetsBox = tk.Checkbutton(frame, text='Display Presets', variable=ShowPresets,
+                                    width=23, anchor=tk.W, command=PresetFrameUpdate)
+    ShowRandomNPCBox = tk.Checkbutton(frame, text='Display Random NPC Button', variable=ShowRandomNPC,
+                                  width=23, anchor=tk.W, command=RandomNPCFrameUpdate)
+    ShowNameBox = tk.Checkbutton(frame, text='Display Name', variable=ShowName,
+                                 width=23, anchor=tk.W, command=NameFrameUpdate)
+    ShowAgeBox = tk.Checkbutton(frame, text='Display Age', variable=ShowAge,
+                                width=23, anchor=tk.W, command=AgeFrameUpdate)
+    ShowGenderBox = tk.Checkbutton(frame, text='Display Gender', variable=ShowGender,
+                                   width=23, anchor=tk.W, command=GenderFrameUpdate)
+    ShowRaceBox = tk.Checkbutton(frame, text='Display Race', variable=ShowRace,
+                                 width=23, anchor=tk.W, command=RaceFrameUpdate)
+    ShowFaceDescriptionBox = tk.Checkbutton(frame, text='Display Face Description', variable=ShowFaceDescription,
+                                            width=23, anchor=tk.W, command=FaceDescriptionFrameUpdate)
+    ShowPhysicalDescriptionBox = tk.Checkbutton(frame, text='Display Physical Description', variable=ShowPhysicalDescription,
+                                                width=23, anchor=tk.W, command=PhysicalDescriptionFrameUpdate)
+    ShowAccessoryDescriptionBox = tk.Checkbutton(frame, text='Display Accessory Description', variable=ShowAccessoryDescription,
+                                                 width=23, anchor=tk.W, command=AccessoryDescriptionFrameUpdate)
+    ShowVoiceSpeedBox = tk.Checkbutton(frame, text='Display Voice Speed', variable=ShowVoiceSpeed,
+                                       width=23, anchor=tk.W, command=VoiceSpeedFrameUpdate)
+    ShowVoiceQualityBox = tk.Checkbutton(frame, text='Display Voice Quality', variable=ShowVoiceQuality,
+                                         width=23, anchor=tk.W, command=VoiceQualityFrameUpdate)
+    ShowProfessionBox = tk.Checkbutton(frame, text='Display Profession', variable=ShowProfession,
+                                       width=23, anchor=tk.W, command=ProfessionFrameUpdate)
+    ShowCalmTraitBox = tk.Checkbutton(frame, text='Display Calm Trait', variable=ShowCalmTrait,
+                                      width=23, anchor=tk.W, command=CalmTraitFrameUpdate)
+    ShowStressedTraitBox = tk.Checkbutton(frame, text='Display Stressed Trait', variable=ShowStressedTrait,
+                                          width=23, anchor=tk.W, command=StressedTraitFrameUpdate)
+    ShowMoodBox = tk.Checkbutton(frame, text='Display Mood', variable=ShowMood,
+                                 width=23, anchor=tk.W, command=MoodFrameUpdate)
+    ShowReactionBox = tk.Checkbutton(frame, text='Display Reaction', variable=ShowReaction,
+                                     width=23, anchor=tk.W, command=ReactionFrameUpdate)
+    ShowMotivationBox = tk.Checkbutton(frame, text='Display Motivation', variable=ShowMotivation,
+                                       width=23, anchor=tk.W, command=MotivationFrameUpdate)
+    ShowNotesBox = tk.Checkbutton(frame, text='Display Notes', variable=ShowNotes,
+                                  width=23, anchor=tk.W, command=NotesFrameUpdate)
+    ShowExportBox = tk.Checkbutton(frame, text='Display Export Button', variable=ShowExport,
+                                  width=23, anchor=tk.W, command=ExportFrameUpdate)
+    
+    ShowPresetsBox.grid(row=1)
+    ShowRandomNPCBox.grid(row=2)
+    ShowNameBox.grid(row=3)
+    ShowAgeBox.grid(row=4)
+    ShowGenderBox.grid(row=5)
+    ShowRaceBox.grid(row=6)
+    ShowFaceDescriptionBox.grid(row=7)
+    ShowPhysicalDescriptionBox.grid(row=8)
+    ShowAccessoryDescriptionBox.grid(row=9)
+    ShowVoiceSpeedBox.grid(row=10)
+    ShowVoiceQualityBox.grid(row=11)
+    ShowProfessionBox.grid(row=12)
+    ShowCalmTraitBox.grid(row=13)
+    ShowStressedTraitBox.grid(row=14)
+    ShowMoodBox.grid(row=15)
+    ShowReactionBox.grid(row=16)
+    ShowMotivationBox.grid(row=17)
+    ShowNotesBox.grid(row=18)
+    ShowExportBox.grid(row=19)
+    frame.grid()
+    # This sets the tk.Toplevel window relative to the
+    # root/main window
+    x = root.winfo_x()
+    y = root.winfo_y()
+    top.geometry("+%d+%d" % (x, y))
+
+def PresetFrameUpdate():
+    if ShowPresets.get()==1:
+        PresetFrame.grid(row=0, column = 0, sticky = tk.W)
+    else:
+        PresetFrame.grid_forget()
+
+def RandomNPCFrameUpdate():
+    if ShowRandomNPC.get()==1:
+        RandomNPCFrame.grid(row=2, column = 0, sticky = tk.W)
+    else:
+        RandomNPCFrame.grid_forget()
+
+def NameFrameUpdate():
+    if ShowName.get()==1:
+        NameFrame.grid(row=3, column = 0, sticky = tk.W)
+    else:
+        NameFrame.grid_forget()
+
+def AgeFrameUpdate():
+    if ShowAge.get()==1:
+        AgeFrame.grid(row=4, column = 0, sticky = tk.W)
+    else:
+        AgeFrame.grid_forget()
+        
+def GenderFrameUpdate():
+    if ShowGender.get()==1:
+        GenderFrame.grid(row=5, column = 0, sticky = tk.W)
+    else:
+        GenderFrame.grid_forget()
+        
+def RaceFrameUpdate():
+    if ShowRace.get()==1:
+        RaceFrame.grid(row=6, column = 0, sticky = tk.W)
+    else:
+        RaceFrame.grid_forget()
+
+def FaceDescriptionFrameUpdate():
+    if ShowFaceDescription.get()==1:
+        FaceDescriptionFrame.grid(row=7, column = 0, sticky = tk.W)
+    else:
+        FaceDescriptionFrame.grid_forget()
+
+def PhysicalDescriptionFrameUpdate():
+    if ShowPhysicalDescription.get()==1:
+        PhysicalDescriptionFrame.grid(row=8, column = 0, sticky = tk.W)
+    else:
+        PhysicalDescriptionFrame.grid_forget()
+
+def AccessoryDescriptionFrameUpdate():
+    if ShowAccessoryDescription.get()==1:
+        AccessoryDescriptionFrame.grid(row=9, column = 0, sticky = tk.W)
+    else:
+        AccessoryDescriptionFrame.grid_forget()
+        
+def VoiceSpeedFrameUpdate():
+    if ShowVoiceSpeed.get()==1:
+        VoiceSpeedFrame.grid(row=10, column = 0, sticky = tk.W)
+    else:
+        VoiceSpeedFrame.grid_forget()
+        
+def VoiceQualityFrameUpdate():
+    if ShowVoiceQuality.get()==1:
+        VoiceQualityFrame.grid(row=11, column = 0, sticky = tk.W)
+    else:
+        VoiceQualityFrame.grid_forget()
+        
+def ProfessionFrameUpdate():
+    if ShowProfession.get()==1:
+        ProfessionFrame.grid(row=12, column = 0, sticky = tk.W)
+    else:
+        ProfessionFrame.grid_forget()
+        
+def CalmTraitFrameUpdate():
+    if ShowCalmTrait.get()==1:
+        CalmTraitFrame.grid(row=13, column = 0, sticky = tk.W)
+    else:
+        CalmTraitFrame.grid_forget()
+        
+def StressedTraitFrameUpdate():
+    if ShowStressedTrait.get()==1:
+        StressedTraitFrame.grid(row=14, column = 0, sticky = tk.W)
+    else:
+        StressedTraitFrame.grid_forget()
+        
+def MoodFrameUpdate():
+    if ShowMood.get()==1:
+        MoodFrame.grid(row=15, column = 0, sticky = tk.W)
+    else:
+        MoodFrame.grid_forget()
+        
+def ReactionFrameUpdate():
+    if ShowReaction.get()==1:
+        ReactionFrame.grid(row=16, column = 0, sticky = tk.W)
+    else:
+        ReactionFrame.grid_forget()
+        
+def MotivationFrameUpdate():
+    if ShowMotivation.get()==1:
+        MotivationFrame.grid(row=17, column = 0, sticky = tk.W)
+    else:
+        MotivationFrame.grid_forget()
+        
+def NotesFrameUpdate():
+    if ShowNotes.get()==1:
+        NotesFrame.grid(row=18, column = 0, sticky = tk.W)
+    else:
+        NotesFrame.grid_forget()
+
+def ExportFrameUpdate():
+    if ShowExport.get()==1:
+        ExportFrame.grid(row=19, column = 0, sticky = tk.W)
+    else:
+        ExportFrame.grid_forget()
+
+def UpdateAllFrames():
+    PresetFrameUpdate()
+    RandomNPCFrameUpdate()
+    NameFrameUpdate()
+    AgeFrameUpdate()
+    GenderFrameUpdate()
+    RaceFrameUpdate()
+    FaceDescriptionFrameUpdate()
+    PhysicalDescriptionFrameUpdate()
+    AccessoryDescriptionFrameUpdate()
+    VoiceSpeedFrameUpdate()
+    VoiceQualityFrameUpdate()
+    ProfessionFrameUpdate()
+    CalmTraitFrameUpdate()
+    StressedTraitFrameUpdate()
+    MoodFrameUpdate()
+    ReactionFrameUpdate()
+    MotivationFrameUpdate()
+    NotesFrameUpdate()
+    ExportFrameUpdate()
 
 ##########################################
 #          Create the menu               #
@@ -3984,6 +4258,7 @@ menubar = tk.Menu(root)
 displaymenu = tk.Menu(menubar, tearoff=0)
 displaymenu.add_command(label='Choose Colors', command=ColorGUI)
 displaymenu.add_command(label='Name', command=NameGUI)
+displaymenu.add_command(label='Fields', command=FieldsGUI)
 menubar.add_cascade(label='Display', menu=displaymenu)
 
 #Display the menu
@@ -3994,21 +4269,25 @@ root.config(menu=menubar)
 #          Create the tk.Frames          #
 ##########################################
 
-NameFrame = tk.Frame(width=444, height=20, bg=Color1.get())
-AgeFrame = tk.Frame(width=444, height=100, bg=Color1.get())
-GenderFrame = tk.Frame(width=444, height=100, bg=Color1.get())
-RaceFrame = tk.Frame(width=444, height=100, bg=Color1.get())
-FaceDescriptionFrame = tk.Frame(width=444, height=100, bg=Color2.get())
-PhysicalDescriptionFrame = tk.Frame(width=444, height=100, bg=Color2.get())
-AccessoryDescriptionFrame = tk.Frame(width=444, height=100, bg=Color2.get())
-VoiceSpeedFrame = tk.Frame(width=444, height=100, bg=Color1.get())
-VoiceQualityFrame = tk.Frame(width=444, height=100, bg=Color1.get())
-ProfessionFrame = tk.Frame(width=444, height=100, bg=Color2.get())
-CalmTraitFrame = tk.Frame(width=444, height=100, bg=Color1.get())
-StressedTraitFrame = tk.Frame(width=444, height=100, bg=Color1.get())
-MoodFrame = tk.Frame(width=444, height=100, bg=Color2.get())
-ReactionFrame = tk.Frame(width=444, height=100, bg=Color2.get())
-MotivationFrame = tk.Frame(width=444, height=100, bg=Color1.get())
+PresetFrame = tk.Frame(width=60, height=10, bg=Color1.get())
+RandomNPCFrame = tk.Frame(width=60, height=10, bg=Color1.get())
+NameFrame = tk.Frame(width=60, height=10, bg=Color1.get())
+AgeFrame = tk.Frame(width=60, height=10, bg=Color1.get())
+GenderFrame = tk.Frame(width=60, height=10, bg=Color1.get())
+RaceFrame = tk.Frame(width=60, height=10, bg=Color1.get())
+FaceDescriptionFrame = tk.Frame(width=60, height=10, bg=Color2.get())
+PhysicalDescriptionFrame = tk.Frame(width=60, height=10, bg=Color2.get())
+AccessoryDescriptionFrame = tk.Frame(width=60, height=10, bg=Color2.get())
+VoiceSpeedFrame = tk.Frame(width=60, height=10, bg=Color1.get())
+VoiceQualityFrame = tk.Frame(width=60, height=10, bg=Color1.get())
+ProfessionFrame = tk.Frame(width=60, height=10, bg=Color2.get())
+CalmTraitFrame = tk.Frame(width=60, height=10, bg=Color1.get())
+StressedTraitFrame = tk.Frame(width=60, height=10, bg=Color1.get())
+MoodFrame = tk.Frame(width=60, height=10, bg=Color2.get())
+ReactionFrame = tk.Frame(width=60, height=10, bg=Color2.get())
+MotivationFrame = tk.Frame(width=60, height=10, bg=Color1.get())
+NotesFrame = tk.Frame(width=60, height=10, bg=Color2.get())
+ExportFrame = tk.Frame(width=60, height=10, bg=Color2.get())
 
 ##########################################
 #          Create the tk.Buttons         #
@@ -4017,31 +4296,51 @@ MotivationFrame = tk.Frame(width=444, height=100, bg=Color1.get())
 #
 #You should know what tk.Buttons are Corey, I'm not gonna do this all for you
 #
+Preset1Button = tk.Button(PresetFrame, textvariable = Preset1Var, wraplength = 75, command = SetPreset1,
+                   width = 11, height = 3, bg=PresetColor1.get())
+Preset2Button = tk.Button(PresetFrame, textvariable = Preset2Var, wraplength = 75, command = SetPreset2,
+                   width = 11, height = 3, bg=PresetColor2.get())
+Preset3Button = tk.Button(PresetFrame, textvariable = Preset3Var, wraplength = 75, command = SetPreset3,
+                   width = 11, height = 3, bg=PresetColor3.get())
+Preset4Button = tk.Button(PresetFrame, textvariable = Preset4Var, wraplength = 75, command = SetPreset4,
+                   width = 11, height = 3, bg=PresetColor4.get())
+Preset5Button = tk.Button(PresetFrame, textvariable = Preset5Var, wraplength = 75, command = SetPreset5,
+                   width = 11, height = 3, bg=PresetColor5.get())
+Preset6Button = tk.Button(PresetFrame, textvariable = Preset6Var, wraplength = 75, command = SetPreset6,
+                   width = 11, height = 3, bg=PresetColor6.get())
+Preset7Button = tk.Button(PresetFrame, textvariable = Preset7Var, wraplength = 75, command = SetPreset7,
+                   width = 11, height = 3, bg=PresetColor7.get())
+Preset8Button = tk.Button(PresetFrame, textvariable = Preset8Var, wraplength = 75, command = SetPreset8,
+                   width = 11, height = 3, bg=PresetColor8.get())
+Preset9Button = tk.Button(PresetFrame, textvariable = Preset9Var, wraplength = 75, command = SetPreset9,
+                   width = 11, height = 3, bg=PresetColor9.get())
+Preset10Button = tk.Button(PresetFrame, textvariable = Preset10Var, wraplength = 75, command = SetPreset10,
+                   width = 11, height = 3, bg=PresetColor10.get())
 
-ColorButton = tk.Button(root,text="Color Menu",bg = Color0.get(),command=ColorGUI,height=3,width=11)
-AllButton = tk.Button(root,text="Generate a random NPC",bg = Color0.get(),command=AllGUI,height=3,width=50)
-NameButton = tk.Button(NameFrame,text="Name", bg = Color1.get(),command=NameGUI,height=1,width=11)
-AgeButton = tk.Button(AgeFrame,text="Age", bg = Color1.get(),command=AgeGUI,height=1,width=11)
-GenderButton = tk.Button(GenderFrame,text="Gender", bg = Color1.get(),command=GenderGUI,height=1,width=11)
-RaceButton = tk.Button(RaceFrame,text="Race", bg = Color1.get(),command=RaceGUI,height=1,width=11)
-FaceDescriptionButton = tk.Button(FaceDescriptionFrame,text="Face", bg = Color2.get(),command=FaceDescriptionGUI,height=1,width=11)
-PhysicalDescriptionButton = tk.Button(PhysicalDescriptionFrame,text="Body", bg = Color2.get(),command=PhysicalDescriptionGUI,height=1,width=11)
-AccessoryDescriptionButton = tk.Button(AccessoryDescriptionFrame,text="Accessory", bg = Color2.get(),command=AccessoryDescriptionGUI,height=1,width=11)
-VoiceSpeedButton = tk.Button(VoiceSpeedFrame,text="Voice Speed", bg = Color1.get(),command=VoiceSpeedGUI,height=1,width=11)
-VoiceQualityButton = tk.Button(VoiceQualityFrame,text="Voice Quality", bg = Color1.get(),command=VoiceQualityGUI,height=1,width=11)
-ProfessionButton = tk.Button(ProfessionFrame,text="Profession", bg = Color2.get(),command=ProfessionGUI,height=1,width=11)
-CalmTraitButton = tk.Button(CalmTraitFrame,text="Calm Trait", bg = Color1.get(),command=CalmTraitGUI,height=1,width=11)
-StressedTraitButton = tk.Button(StressedTraitFrame,text="Stressed Trait", bg = Color1.get(),command=StressedTraitGUI,height=1,width=11)
-MoodButton = tk.Button(MoodFrame,text="Mood", bg = Color2.get(),command=MoodGUI,height=1,width=11)
-ReactionButton = tk.Button(ReactionFrame,text="Reaction", bg = Color2.get(),command=ReactionGUI,height=5,width=11)
-MotivationButton = tk.Button(MotivationFrame,text="Motivation", bg = Color1.get(),command=MotivationGUI,height=4,width=11)
+ColorButton = tk.Button(RandomNPCFrame,text="Color Menu",bg = Color0.get(),command=ColorGUI,height=3,width=10)
+AllButton = tk.Button(RandomNPCFrame,text="Generate a random NPC",bg = Color0.get(),command=AllGUI,height=3,width=61)
+NameButton = tk.Button(NameFrame,text="Name", bg = Color1.get(),command=NameGUI,height=1,width=10)
+AgeButton = tk.Button(AgeFrame,text="Age", bg = Color1.get(),command=AgeGUI,height=1,width=10)
+GenderButton = tk.Button(GenderFrame,text="Gender", bg = Color1.get(),command=GenderGUI,height=1,width=10)
+RaceButton = tk.Button(RaceFrame,text="Race", bg = Color1.get(),command=RaceGUI,height=1,width=10)
+FaceDescriptionButton = tk.Button(FaceDescriptionFrame,text="Face", bg = Color2.get(),command=FaceDescriptionGUI,height=1,width=10)
+PhysicalDescriptionButton = tk.Button(PhysicalDescriptionFrame,text="Body", bg = Color2.get(),command=PhysicalDescriptionGUI,height=1,width=10)
+AccessoryDescriptionButton = tk.Button(AccessoryDescriptionFrame,text="Accessory", bg = Color2.get(),command=AccessoryDescriptionGUI,height=1,width=10)
+VoiceSpeedButton = tk.Button(VoiceSpeedFrame,text="Voice Speed", bg = Color1.get(),command=VoiceSpeedGUI,height=1,width=10)
+VoiceQualityButton = tk.Button(VoiceQualityFrame,text="Voice Quality", bg = Color1.get(),command=VoiceQualityGUI,height=1,width=10)
+ProfessionButton = tk.Button(ProfessionFrame,text="Profession", bg = Color2.get(),command=ProfessionGUI,height=1,width=10)
+CalmTraitButton = tk.Button(CalmTraitFrame,text="Calm Trait", bg = Color1.get(),command=CalmTraitGUI,height=1,width=10)
+StressedTraitButton = tk.Button(StressedTraitFrame,text="Stressed Trait", bg = Color1.get(),command=StressedTraitGUI,height=1,width=10)
+MoodButton = tk.Button(MoodFrame,text="Mood", bg = Color2.get(),command=MoodGUI,height=1,width=10)
+ReactionButton = tk.Button(ReactionFrame,text="Reaction", bg = Color2.get(),command=ReactionGUI,height=5,width=10)
+MotivationButton = tk.Button(MotivationFrame,text="Motivation", bg = Color1.get(),command=MotivationGUI,height=4,width=10)
+NotesButton = tk.Button(NotesFrame, text='Session Notes', bg=Color2.get(), height=4, width=10)
 #RumorButton = tk.Button(root,text="Rumor", bg = '#e2efd9',command=RumorGUI,height=8,width=11)
 
 
 
-ExcelExportButton = tk.Button(root,bg = Color0.get(),text="Export to an excel file in this folder. Only exports when this window is closed.",command=ExcelExportGUI,height=3,width=62)
+ExcelExportButton = tk.Button(ExportFrame,bg = Color0.get(),text="Export to excel. Only exports when this window is closed.",command=ExcelExportGUI,height=3,width=61)
 
-AllButton.bind("<Button-3>", AllRC)
 NameButton.bind("<Button-3>", NameRC)
 AgeButton.bind("<Button-3>", AgeRC)
 GenderButton.bind("<Button-2>", ToggleGenderGUI)
@@ -4085,28 +4384,29 @@ MotivationButton.bind("<Button-3>", MotivationRC)
 ##########################################
 #          Create the entry things       #
 ##########################################
-NameEntry = tk.Entry(NameFrame, textvariable = Name,width=60, bg = Color1.get(), bd=0)
-AgeEntry = tk.Entry(AgeFrame, textvariable = str(Age),width=60, bg = Color1.get(), bd=0)
-GenderEntry = tk.Entry(GenderFrame, textvariable = Gender,width=60, bg = Color1.get(), bd=0)
-RaceEntry = tk.Entry(RaceFrame, textvariable = Race,width=60, bg = Color1.get(), bd=0)
-FaceDescriptionEntry = tk.Entry(FaceDescriptionFrame, textvariable = FaceDescription,width=60, bg = Color2.get(), bd=0)
-PhysicalDescriptionEntry = tk.Entry(PhysicalDescriptionFrame, textvariable = PhysicalDescription,width=60, bg = Color2.get(), bd=0)
-AccessoryDescriptionEntry = tk.Entry(AccessoryDescriptionFrame, textvariable = AccessoryDescription,width=60, bg = Color2.get(), bd=0)
-VoiceSpeedEntry = tk.Entry(VoiceSpeedFrame, textvariable = VoiceSpeed,width=60, bg = Color1.get(), bd=0)
-VoiceQualityEntry = tk.Entry(VoiceQualityFrame, textvariable = VoiceQuality,width=60, bg = Color1.get(), bd=0)
-ProfessionEntry = tk.Entry(ProfessionFrame, textvariable = Profession,width=60, bg = Color2.get(), bd=0)
-CalmTraitEntry = tk.Entry(CalmTraitFrame, textvariable = CalmTrait,width=60, bg = Color1.get(), bd=0)
-StressedTraitEntry = tk.Entry(StressedTraitFrame, textvariable = StressedTrait,width=60, bg = Color1.get(), bd=0)
-MoodEntry = tk.Entry(MoodFrame, textvariable = Mood,width=60, bg = Color2.get(), bd=0)
+NameEntry = tk.Entry(NameFrame, textvariable = Name, width=59, bg = Color1.get(), bd=0)
+AgeEntry = tk.Entry(AgeFrame, textvariable = str(Age), width=59, bg = Color1.get(), bd=0)
+GenderEntry = tk.Entry(GenderFrame, textvariable = Gender, width=59, bg = Color1.get(), bd=0)
+RaceEntry = tk.Entry(RaceFrame, textvariable = Race, width=59, bg = Color1.get(), bd=0)
+FaceDescriptionEntry = tk.Entry(FaceDescriptionFrame, textvariable = FaceDescription, width=59, bg = Color2.get(), bd=0)
+PhysicalDescriptionEntry = tk.Entry(PhysicalDescriptionFrame, textvariable = PhysicalDescription, width=59, bg = Color2.get(), bd=0)
+AccessoryDescriptionEntry = tk.Entry(AccessoryDescriptionFrame, textvariable = AccessoryDescription, width=59, bg = Color2.get(), bd=0)
+VoiceSpeedEntry = tk.Entry(VoiceSpeedFrame, textvariable = VoiceSpeed, width=59, bg = Color1.get(), bd=0)
+VoiceQualityEntry = tk.Entry(VoiceQualityFrame, textvariable = VoiceQuality, width=59, bg = Color1.get(), bd=0)
+ProfessionEntry = tk.Entry(ProfessionFrame, textvariable = Profession, width=59, bg = Color2.get(), bd=0)
+CalmTraitEntry = tk.Entry(CalmTraitFrame, textvariable = CalmTrait, width=59, bg = Color1.get(), bd=0)
+StressedTraitEntry = tk.Entry(StressedTraitFrame, textvariable = StressedTrait, width=59, bg = Color1.get(), bd=0)
+MoodEntry = tk.Entry(MoodFrame, textvariable = Mood, width=59, bg = Color2.get(), bd=0)
 
 # These two are Text regions because they need to be multiple lines
-ReactionEntry = tk.Text(ReactionFrame, width=60, wrap=tk.WORD, height=4, bg = Color2.get(), bd=0)
-MotivationEntry = tk.Text(MotivationFrame, width=60, wrap=tk.WORD, height=4, bg = Color1.get(), bd=0)
+ReactionEntry = tk.Text(ReactionFrame, width=59, wrap=tk.WORD, height=4, bg = Color2.get(), bd=0)
+MotivationEntry = tk.Text(MotivationFrame, width=59, wrap=tk.WORD, height=4, bg = Color1.get(), bd=0)
+NotesEntry = tk.Text(NotesFrame, width=59, wrap=tk.WORD, height=4, bg = Color2.get(), bd=0)
 
-#try:
-#    from tkFont import Font
+ 
 ReactionEntry.configure(font=('Segoe UI', 9))
 MotivationEntry.configure(font=('Segoe UI', 9))
+NotesEntry.configure(font=('Segoe UI', 9))
 #MotivationEntry.insert(tk.INSERT,'Test')
 
 ##########################################
@@ -4117,63 +4417,94 @@ MotivationEntry.configure(font=('Segoe UI', 9))
 # looks pretty fucking stupid right now but w/e
 
 # Check to see which frames should be displayed
-NameFrame.grid(row=1, columnspan=2,sticky = tk.E)
-AgeFrame.grid(row=2, columnspan=2,sticky = tk.E)
-GenderFrame.grid(row=3, columnspan=2,sticky = tk.E)
-RaceFrame.grid(row=4, columnspan=2,sticky = tk.E)
-FaceDescriptionFrame.grid(row=5, columnspan=2,sticky = tk.E)
-PhysicalDescriptionFrame.grid(row=6, columnspan=2,sticky = tk.E)
-AccessoryDescriptionFrame.grid(row=7, columnspan=2,sticky = tk.E)
-VoiceSpeedFrame.grid(row=8, columnspan=2,sticky = tk.E)
-VoiceQualityFrame.grid(row=9, columnspan=2,sticky = tk.E)
-ProfessionFrame.grid(row=10, columnspan=2,sticky = tk.E)
-CalmTraitFrame.grid(row=11, columnspan=2,sticky = tk.E)
-StressedTraitFrame.grid(row=12, columnspan=2,sticky = tk.E)
-MoodFrame.grid(row=13, columnspan=2,sticky = tk.E)
-ReactionFrame.grid(row=14, columnspan=2,sticky = tk.E)
-MotivationFrame.grid(row=15, columnspan=2,sticky = tk.E)
+Preset1Button.grid(row = 0, column = 0, sticky = tk.W)
+Preset2Button.grid(row = 0, column = 1, sticky = tk.W)
+Preset3Button.grid(row = 0, column = 2, sticky = tk.W)
+Preset4Button.grid(row = 0, column = 3, sticky = tk.W)
+Preset5Button.grid(row = 0, column = 4, sticky = tk.W)
+Preset6Button.grid(row = 1, column = 0, sticky = tk.W)
+Preset7Button.grid(row = 1, column = 1, sticky = tk.W)
+Preset8Button.grid(row = 1, column = 2, sticky = tk.W)
+Preset9Button.grid(row = 1, column = 3, sticky = tk.W)
+Preset10Button.grid(row = 1, column = 4, sticky = tk.W)
 
-AllButton.grid(row=0,column=1,sticky = tk.W)
-ColorButton.grid(row=0, column=0,sticky = tk.E)
+Preset1Button.bind("<Button-3>", Preset1RC)
+Preset2Button.bind("<Button-3>", Preset2RC)
+Preset3Button.bind("<Button-3>", Preset3RC)
+Preset4Button.bind("<Button-3>", Preset4RC)
+Preset5Button.bind("<Button-3>", Preset5RC)
+Preset6Button.bind("<Button-3>", Preset6RC)
+Preset7Button.bind("<Button-3>", Preset7RC)
+Preset8Button.bind("<Button-3>", Preset8RC)
+Preset9Button.bind("<Button-3>", Preset9RC)
+Preset10Button.bind("<Button-3>", Preset10RC)
 
-NameButton.grid(row=1, column=0,sticky = tk.E)
-NameEntry.grid(row=1, column=1,sticky = tk.W)
-AgeButton.grid(row=2, column=0,sticky = tk.E)
-AgeEntry.grid(row=2, column=1,sticky = tk.W)
-GenderButton.grid(row=3, column=0,sticky = tk.E)
-GenderEntry.grid(row=3, column=1,sticky = tk.W)
-RaceButton.grid(row=4, column=0,sticky = tk.E)
-RaceEntry.grid(row=4, column=1,sticky = tk.W)
-FaceDescriptionButton.grid(row=5, column=0,sticky = tk.E)
-FaceDescriptionEntry.grid(row=5, column=1,sticky = tk.W)
-PhysicalDescriptionButton.grid(row=6, column=0,sticky = tk.E)
-PhysicalDescriptionEntry.grid(row=6, column=1,sticky = tk.W)
-AccessoryDescriptionButton.grid(row=7, column=0,sticky = tk.E)
-AccessoryDescriptionEntry.grid(row=7, column=1,sticky = tk.W)
-VoiceSpeedButton.grid(row=8, column=0,sticky = tk.E)
-VoiceSpeedEntry.grid(row=8, column=1,sticky = tk.W)
-VoiceQualityButton.grid(row=9, column=0,sticky = tk.E)
-VoiceQualityEntry.grid(row=9, column=1,sticky = tk.W)
-ProfessionButton.grid(row=10, column=0,sticky = tk.E)
-ProfessionEntry.grid(row=10, column=1,sticky = tk.W)
-CalmTraitButton.grid(row=11, column=0,sticky = tk.E)
-CalmTraitEntry.grid(row=11, column=1,sticky = tk.W)
-StressedTraitButton.grid(row=12, column=0,sticky = tk.E)
-StressedTraitEntry.grid(row=12, column=1,sticky = tk.W)
-MoodButton.grid(row=13, column=0,sticky = tk.E)
-MoodEntry.grid(row=13, column=1,sticky = tk.W)
-ReactionButton.grid(row=14, column=0,sticky = tk.E)
-ReactionEntry.grid(row=14, column=1,sticky = tk.W)
-MotivationButton.grid(row=15, column=0,sticky = tk.E)
-MotivationEntry.grid(row=15, column=1,sticky = tk.W)
+UpdateAllFrames()
+
+#PresetFrame.grid(row=0, column=0, sticky = tk.W)
+#TopButtonFrame.grid(row=1, column=0, sticky = tk.W)
+#NameFrame.grid(row=3, column = 0, sticky = tk.W)
+#AgeFrame.grid(row=4, column = 0, sticky = tk.W)
+#GenderFrame.grid(row=5, column = 0, columnspan=4,sticky = tk.W)
+#RaceFrame.grid(row=6, column = 0, columnspan=4,sticky = tk.W)
+#FaceDescriptionFrame.grid(row=7, column = 0, columnspan=4,sticky = tk.W)
+#PhysicalDescriptionFrame.grid(row=8, column = 0, columnspan=4,sticky = tk.W)
+#AccessoryDescriptionFrame.grid(row=9, column = 0, columnspan=4,sticky = tk.W)
+#VoiceSpeedFrame.grid(row=10, column = 0, columnspan=4,sticky = tk.W)
+#VoiceQualityFrame.grid(row=11, column = 0, columnspan=4,sticky = tk.W)
+#ProfessionFrame.grid(row=12, column = 0, columnspan=4,sticky = tk.W)
+#CalmTraitFrame.grid(row=13, column = 0, columnspan=4,sticky = tk.W)
+#StressedTraitFrame.grid(row=14, column = 0, columnspan=4,sticky = tk.W)
+#MoodFrame.grid(row=15, column = 0, columnspan=4,sticky = tk.W)
+#ReactionFrame.grid(row=16, column = 0, columnspan=4,sticky = tk.W)
+#MotivationFrame.grid(row=17, column = 0, columnspan=4,sticky = tk.W)
+#NotesFrame.grid(row=18, column=0, columnspan=4, sticky=tk.W)
+
+
+#RandomNPCFrame.grid(row=1, column=0, sticky = tk.W)
+AllButton.grid(row=2, column=0, sticky = tk.W)
+#ColorButton.grid(row=2, column=0, sticky = tk.W)
+
+NameButton.grid(row=3, column=0, sticky = tk.E)
+NameEntry.grid(row=3, column=1, columnspan=1, sticky = tk.W)
+AgeButton.grid(row=4, column=0, sticky = tk.E)
+AgeEntry.grid(row=4, column=1, sticky = tk.W)
+GenderButton.grid(row=5, column=0, sticky = tk.E)
+GenderEntry.grid(row=5, column=1, sticky = tk.W)
+RaceButton.grid(row=6, column=0, sticky = tk.E)
+RaceEntry.grid(row=6, column=1, sticky = tk.W)
+FaceDescriptionButton.grid(row=7, column=0, sticky = tk.E)
+FaceDescriptionEntry.grid(row=7, column=1, sticky = tk.W)
+PhysicalDescriptionButton.grid(row=8, column=0, sticky = tk.E)
+PhysicalDescriptionEntry.grid(row=8, column=1, sticky = tk.W)
+AccessoryDescriptionButton.grid(row=9, column=0, sticky = tk.E)
+AccessoryDescriptionEntry.grid(row=9, column=1, sticky = tk.W)
+VoiceSpeedButton.grid(row=10, column=0, sticky = tk.E)
+VoiceSpeedEntry.grid(row=10, column=1, sticky = tk.W)
+VoiceQualityButton.grid(row=11, column=0, sticky = tk.E)
+VoiceQualityEntry.grid(row=11, column=1, sticky = tk.W)
+ProfessionButton.grid(row=12, column=0, sticky = tk.E)
+ProfessionEntry.grid(row=12, column=1, sticky = tk.W)
+CalmTraitButton.grid(row=13, column=0, sticky = tk.E)
+CalmTraitEntry.grid(row=13, column=1, sticky = tk.W)
+StressedTraitButton.grid(row=14, column=0, sticky = tk.E)
+StressedTraitEntry.grid(row=14, column=1 ,sticky = tk.W)
+MoodButton.grid(row=15, column=0, sticky = tk.E)
+MoodEntry.grid(row=15, column=1, sticky = tk.W)
+ReactionButton.grid(row=16, column=0, sticky = tk.E)
+ReactionEntry.grid(row=16, column=1, sticky = tk.W)
+MotivationButton.grid(row=17, column=0, sticky = tk.E)
+MotivationEntry.grid(row=17, column=1, sticky = tk.W)
+NotesButton.grid(row=18, column=0, sticky=tk.E)
+NotesEntry.grid(row=18, column=1, sticky=tk.W)
 #RumorButton.grid(row=16, column=0,sticky = E)
 #RumorLabel.grid(row=16, column=1,sticky = W)
 
-ExcelExportButton.grid(row=16, columnspan=2, sticky = tk.W)
+ExcelExportButton.grid(row=19, columnspan=5, sticky=tk.W)
 
-root.minsize(width=444, height=607)
-root.maxsize(width=444, height=607)
-root.grid_columnconfigure(1,weight=2)
+#root.minsize(width=444, height=607)
+#root.maxsize(width=444, height=607)
+root.grid_columnconfigure(1,weight=1)
 root.grid()
 root.wm_title('OmnipotentSpoon\'s NPCs Generator')
 AllGUI()
