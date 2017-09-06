@@ -1,8 +1,0 @@
-Bored: Indifferent
-Bored: Apathetic
-Busy: Pressured
-Busy: Rushed
-Stressed: Overwhelmed
-Stressed: Out of control
-Tired: Sleepy
-Tired: Unfocussed

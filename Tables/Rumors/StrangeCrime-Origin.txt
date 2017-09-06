@@ -1,4 +1,0 @@
-local
-foreign
-exotic looking
-unknown
