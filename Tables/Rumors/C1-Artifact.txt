@@ -1,0 +1,10 @@
+an arcane artifact
+a dwarvish artifact
+an elemental artifact
+an elvish artifact
+a giant artifact
+a holy artifact
+a relic of a hero
+a relic of a villian
+an unholy artifact
+a piece of an item set made in ancient times

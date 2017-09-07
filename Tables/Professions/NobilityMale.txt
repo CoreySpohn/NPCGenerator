@@ -1,0 +1,15 @@
+Archduke
+Baron
+Count
+Court wizard
+Duke
+Earl
+Esquire
+Gentleman
+King
+Knight
+Lord
+Noble
+Patrician
+Prince
+Steward

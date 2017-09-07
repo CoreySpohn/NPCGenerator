@@ -1,0 +1,20 @@
+might be true
+must be true
+has to be true
+can't be true
+could be true
+is definitely true
+may be true
+is likely true
+is possibly true
+is certainly true
+is absolutely true
+is probably true
+is likely partially true
+is definitely not true
+can't be entirely false
+isn't likely false
+isn't likely entirely false
+might not be true
+isn't likely the whole story
+is probably just idle gossip
