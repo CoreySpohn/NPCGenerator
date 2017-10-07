@@ -1434,8 +1434,10 @@ def ProfessionGen(Toggles):
     Criminals = Toggles[7]
     Academics = Toggles[8]
     Magicians = Toggles[9]
+    CustomNum = Toggles[10]
+    CustomStr = Toggles[11]
     
-    Total = CommonerCraftsmen + CommonerLaborer + CommonerProfessions + Farmers + MilitaryAndWarriors + Bureaucrats + Clergymen + Criminals + Academics + Magicians
+    Total = CommonerCraftsmen + CommonerLaborer + CommonerProfessions + Farmers + MilitaryAndWarriors + Bureaucrats + Clergymen + Criminals + Academics + Magicians + CustomNum
     if (Total == 0):
         return 'No options selected, right click on the button.'
     
@@ -1459,6 +1461,8 @@ def ProfessionGen(Toggles):
         Active.append(9)
     if (Magicians == 1):
         Active.append(10)
+    if (CustomNum == 1):
+        Active.append(11)
     
     ProfessionNum = random.choice(Active)
     if (ProfessionNum == 1):
@@ -1480,7 +1484,9 @@ def ProfessionGen(Toggles):
     elif (ProfessionNum == 9):
         Profession = AcademicsGen()
     elif (ProfessionNum == 10):
-        Profession = MagiciansGen()            
+        Profession = MagiciansGen()
+    elif (ProfessionNum == 11):
+        Profession = CustomStr
     return Profession.strip('\n')
 
 ##################################################
@@ -2323,6 +2329,8 @@ ClergymenVar = tk.IntVar()
 CriminalsVar = tk.IntVar()
 AcademicsVar = tk.IntVar()
 MagiciansVar = tk.IntVar()
+CustomProfessionBoxVar = tk.IntVar()
+CustomProfessionEntryVar = tk.StringVar() # This is preset specific
 
 # Mood toggle variables
 HappyVar = tk.IntVar()
@@ -2369,7 +2377,7 @@ def GetAll():
                 StressedPositiveVar.get(),StressedNeutralVar.get(),StressedNegativeVar.get(),
                 CommonerCraftsmenVar.get(),CommonerLaborerVar.get(),CommonerProfessionsVar.get(),
                 FarmersVar.get(),MilitaryAndWarriorsVar.get(),BureaucratsVar.get(),ClergymenVar.get(),
-                CriminalsVar.get(),AcademicsVar.get(),MagiciansVar.get(),
+                CriminalsVar.get(),AcademicsVar.get(),MagiciansVar.get(), CustomProfessionBoxVar.get(), CustomProfessionEntryVar.get(),
                 HappyVar.get(),SadVar.get(),DisgustedVar.get(),AngryVar.get(),FearfulVar.get(),
                 BadVar.get(),SurprisedVar.get(),
                 HostileReactionVar.get(),UnhappyReactionVar.get(),DisgruntledReactionVar.get(),
@@ -2442,7 +2450,7 @@ def GetStressedTraitToggles():
 def GetProfessionToggles():
     Toggles = [CommonerCraftsmenVar.get(),CommonerLaborerVar.get(),CommonerProfessionsVar.get(),
                FarmersVar.get(),MilitaryAndWarriorsVar.get(),BureaucratsVar.get(),ClergymenVar.get(),
-               CriminalsVar.get(),AcademicsVar.get(),MagiciansVar.get()]
+               CriminalsVar.get(),AcademicsVar.get(),MagiciansVar.get(), CustomProfessionBoxVar.get(), CustomProfessionEntryVar.get()]
     return Toggles
 
 def GetMoodToggles():
@@ -2701,6 +2709,8 @@ ClergymenVar.set(int(InitialProfession[6]))
 CriminalsVar.set(int(InitialProfession[7]))
 AcademicsVar.set(int(InitialProfession[8]))
 MagiciansVar.set(int(InitialProfession[9]))
+CustomProfessionBoxVar.set(int(InitialProfession[10]))
+CustomProfessionEntryVar.set(InitialProfession[11])
 
 HappyVar.set(int(InitialMood[0]))
 SadVar.set(int(InitialMood[1]))
@@ -2828,129 +2838,68 @@ def SetPreset(Preset):
     CriminalsVar.set(int(Preset[47]))
     AcademicsVar.set(int(Preset[48]))
     MagiciansVar.set(int(Preset[49]))
-    HappyVar.set(int(Preset[50]))
-    SadVar.set(int(Preset[51]))
-    DisgustedVar.set(int(Preset[52]))
-    AngryVar.set(int(Preset[53]))
-    FearfulVar.set(int(Preset[54]))
-    BadVar.set(int(Preset[55]))
-    SurprisedVar.set(int(Preset[56]))
-    HostileReactionVar.set(int(Preset[57]))
-    UnhappyReactionVar.set(int(Preset[58]))
-    DisgruntledReactionVar.set(int(Preset[59]))
-    IndifferentReactionVar.set(int(Preset[60]))
-    PleasedReactionVar.set(int(Preset[61]))
-    HappyReactionVar.set(int(Preset[62]))
-    FriendlyReactionVar.set(int(Preset[63]))
-    OnTheRunMotivationVar.set(int(Preset[64]))
-    VendettaMotivationVar.set(int(Preset[65]))
-    InformationMotivationVar.set(int(Preset[66]))
-    BuyingOrSellingMotivationVar.set(int(Preset[67]))
-    LocalQuestMotivationVar.set(int(Preset[68]))
-    QuestEnemyMotivationVar.set(int(Preset[69]))
-    QuestTreasureMotivationVar.set(int(Preset[70]))
+    CustomProfessionBoxVar.set(int(Preset[50]))
+    CustomProfessionEntryVar.set(Preset[51])
+    HappyVar.set(int(Preset[52]))
+    SadVar.set(int(Preset[53]))
+    DisgustedVar.set(int(Preset[54]))
+    AngryVar.set(int(Preset[55]))
+    FearfulVar.set(int(Preset[56]))
+    BadVar.set(int(Preset[57]))
+    SurprisedVar.set(int(Preset[58]))
+    HostileReactionVar.set(int(Preset[59]))
+    UnhappyReactionVar.set(int(Preset[60]))
+    DisgruntledReactionVar.set(int(Preset[61]))
+    IndifferentReactionVar.set(int(Preset[62]))
+    PleasedReactionVar.set(int(Preset[63]))
+    HappyReactionVar.set(int(Preset[64]))
+    FriendlyReactionVar.set(int(Preset[65]))
+    OnTheRunMotivationVar.set(int(Preset[66]))
+    VendettaMotivationVar.set(int(Preset[67]))
+    InformationMotivationVar.set(int(Preset[68]))
+    BuyingOrSellingMotivationVar.set(int(Preset[69]))
+    LocalQuestMotivationVar.set(int(Preset[70]))
+    QuestEnemyMotivationVar.set(int(Preset[71]))
+    QuestTreasureMotivationVar.set(int(Preset[72]))
 
 # These programs are used to set the current values to the values saved
 # as the presets currently
-def SetPreset1():
-    Preset1 = []
-    with open(Preset1Path) as f:
+def SetPresetNum(Num):
+    '''
+    This function is used when a preset button is pressed
+    '''
+    Path = 'Tables/Presets/Preset' + str(Num) + '.csv'
+    Path = os.path.join(ScriptDir, Path)
+    PresetList = []
+    with open(Path) as f:
         reader = csv.reader(f)
-        Preset1 = next(reader)
-    SetPreset(Preset1)
+        PresetList = next(reader)
+    SetPreset(PresetList)
     SaveColors()
     AllGUI()
-    ActivePreset.set(1)
+    ActivePreset.set(Num)
 
-def SetPreset2():
-    Preset2 = []
-    with open(Preset2Path) as f:
-        reader = csv.reader(f)
-        Preset2 = next(reader)
-    SetPreset(Preset2)
-    SaveColors()
-    AllGUI()
-    ActivePreset.set(2)
+
+def SavePresetNum(Num):
+    PresetButton = 'PresetFrame.Preset' + str(Num) + 'Button'
+    PresetColor = 'PresetColor' + str(Num)
+    Path = 'Tables/Presets/Preset' + str(Num) + '.csv'
+    Path = os.path.join(ScriptDir, Path)
     
-def SetPreset3():
-    Preset3 = []
-    with open(Preset3Path) as f:
-        reader = csv.reader(f)
-        Preset3 = next(reader)
-    SetPreset(Preset3)
-    SaveColors()
-    AllGUI()
-    ActivePreset.set(3)
-
-def SetPreset4():
-    Preset4 = []
-    with open(Preset4Path) as f:
-        reader = csv.reader(f)
-        Preset4 = next(reader)
-    SetPreset(Preset4)
-    SaveColors()
-    AllGUI()
-    ActivePreset.set(4)
-
-def SetPreset5():
-    Preset5 = []
-    with open(Preset5Path) as f:
-        reader = csv.reader(f)
-        Preset5 = next(reader)
-    SetPreset(Preset5)
-    SaveColors()
-    AllGUI()
-    ActivePreset.set(5)
-
-def SetPreset6():
-    Preset6 = []
-    with open(Preset6Path) as f:
-        reader = csv.reader(f)
-        Preset6 = next(reader)
-    SetPreset(Preset6)
-    SaveColors()
-    AllGUI()
-    ActivePreset.set(6)
-
-def SetPreset7():
-    Preset7 = []
-    with open(Preset7Path) as f:
-        reader = csv.reader(f)
-        Preset7 = next(reader)
-    SetPreset(Preset7)
-    SaveColors()
-    AllGUI()
-    ActivePreset.set(7)
- 
-def SetPreset8():
-    Preset8 = []
-    with open(Preset8Path) as f:
-        reader = csv.reader(f)
-        Preset8 = next(reader)
-    SetPreset(Preset8)
-    SaveColors()
-    AllGUI()
-    ActivePreset.set(8)
-
-def SetPreset9():
-    Preset9 = []
-    with open(Preset9Path) as f:
-        reader = csv.reader(f)
-        Preset9 = next(reader)
-    SetPreset(Preset9)
-    SaveColors()
-    AllGUI()
-    ActivePreset.set(9)
-
-def SetPreset10():
-    Preset10 = []
-    with open(Preset10Path) as f:
-        reader = csv.reader(f)
-        Preset10 = next(reader)
-    SetPreset(Preset10)
-    SaveColors()
-    AllGUI()
-    ActivePreset.set(10)
+    root.nametowidget(PresetButton).config(bg=TempColor1.get())
+    root.nametowidget(PresetColor).set(TempColor1.get())
+    AllToggles = GetAll()
+    AllToggles[0] = TempColor0.get()
+    AllToggles[1] = TempColor1.get()
+    AllToggles[2] = TempColor2.get()
+    if ActivePreset.get() == 1:
+        Color0.set(TempColor0.get())
+        Color1.set(TempColor1.get())
+        Color2.set(TempColor2.get())
+        SaveColors()
+    with open(Path, "w") as f:
+        writer = csv.writer(f)
+        writer.writerow(AllToggles)
 
 def SavePreset1():
     Preset1Button.config(bg=TempColor1.get())
@@ -3203,7 +3152,7 @@ def Preset1RC(event):
     
     # Create and place the button that saves all settings
     PresetSaveButton = tk.Button(top, text = 'Save all current settings', width=31,
-                              bg = TempColor0.get(),justify=tk.CENTER,command = SavePreset1)
+                              bg = TempColor0.get(),justify=tk.CENTER,command = lambda: SavePresetNum(1))
     PresetSaveButton.grid(row=5, columnspan=2)
     
     top.grid()
@@ -4375,25 +4324,30 @@ def ProfessionRC(event):
     top.title('Professions')
     frame = tk.Frame(top)
     CommonerCraftsmenBox = tk.Checkbutton(frame, text='Commoner Craftsmen', variable = CommonerCraftsmenVar)
-    CommonerCraftsmenBox.pack()
+    CommonerCraftsmenBox.grid(row=0, columnspan=2)
     CommonerLaborerBox = tk.Checkbutton(frame, text='Commoner Laborer', variable = CommonerLaborerVar)
-    CommonerLaborerBox.pack()
+    CommonerLaborerBox.grid(row=1, columnspan=2)
     CommonerProfessionsBox = tk.Checkbutton(frame, text='Commoner Professions', variable = CommonerProfessionsVar)
-    CommonerProfessionsBox.pack()
+    CommonerProfessionsBox.grid(row=2, columnspan=2)
     FarmersBox = tk.Checkbutton(frame, text='Farmers', variable = FarmersVar)
-    FarmersBox.pack()
+    FarmersBox.grid(row=3, columnspan=2)
     MilitaryAndWarriorsBox = tk.Checkbutton(frame, text='Military and warriors', variable = MilitaryAndWarriorsVar)
-    MilitaryAndWarriorsBox.pack()
+    MilitaryAndWarriorsBox.grid(row=4, columnspan=2)
     BureaucratsBox = tk.Checkbutton(frame, text='Bureaucrats', variable = BureaucratsVar)
-    BureaucratsBox.pack()
+    BureaucratsBox.grid(row=5, columnspan=2)
     ClergymenBox = tk.Checkbutton(frame, text='Clergymen', variable = ClergymenVar)
-    ClergymenBox.pack()
+    ClergymenBox.grid(row=6, columnspan=2)
     CriminalsBox = tk.Checkbutton(frame, text='Criminals', variable = CriminalsVar)
-    CriminalsBox.pack()
+    CriminalsBox.grid(row=7, columnspan=2)
     AcademicsBox = tk.Checkbutton(frame, text='Academics', variable = AcademicsVar)
-    AcademicsBox.pack()
+    AcademicsBox.grid(row=8, columnspan=2)
     MagiciansBox = tk.Checkbutton(frame, text='Magicians', variable = MagiciansVar)
-    MagiciansBox.pack()
+    MagiciansBox.grid(row=9, columnspan=2)
+    CustomBox = tk.Checkbutton(frame, variable = CustomProfessionBoxVar)
+    CustomBox.grid(row=10, column=0)
+    CustomEntry = tk.Entry(frame, textvariable = CustomProfessionEntryVar)
+    CustomEntry.grid(row=10, column=1)
+    
     frame.pack()
     # This sets the tk.Toplevel window relative to the
     # root/main window
@@ -5161,25 +5115,25 @@ ExportFrame = tk.Frame(width=60, height=10, bg=Color2.get())
 #
 #You should know what tk.Buttons are Corey, I'm not gonna do this all for you
 #
-Preset1Button = tk.Button(PresetFrame, textvariable = Preset1Var, wraplength = 75, command = SetPreset1,
+Preset1Button = tk.Button(PresetFrame, textvariable = Preset1Var, wraplength = 75, command = lambda: SetPresetNum(1),
                    width = 11, height = 3, bg=PresetColor1.get())
-Preset2Button = tk.Button(PresetFrame, textvariable = Preset2Var, wraplength = 75, command = SetPreset2,
+Preset2Button = tk.Button(PresetFrame, textvariable = Preset2Var, wraplength = 75, command = lambda: SetPresetNum(2),
                    width = 11, height = 3, bg=PresetColor2.get())
-Preset3Button = tk.Button(PresetFrame, textvariable = Preset3Var, wraplength = 75, command = SetPreset3,
+Preset3Button = tk.Button(PresetFrame, textvariable = Preset3Var, wraplength = 75, command = lambda: SetPresetNum(3),
                    width = 11, height = 3, bg=PresetColor3.get())
-Preset4Button = tk.Button(PresetFrame, textvariable = Preset4Var, wraplength = 75, command = SetPreset4,
+Preset4Button = tk.Button(PresetFrame, textvariable = Preset4Var, wraplength = 75, command = lambda: SetPresetNum(4),
                    width = 11, height = 3, bg=PresetColor4.get())
-Preset5Button = tk.Button(PresetFrame, textvariable = Preset5Var, wraplength = 75, command = SetPreset5,
+Preset5Button = tk.Button(PresetFrame, textvariable = Preset5Var, wraplength = 75, command = lambda: SetPresetNum(5),
                    width = 11, height = 3, bg=PresetColor5.get())
-Preset6Button = tk.Button(PresetFrame, textvariable = Preset6Var, wraplength = 75, command = SetPreset6,
+Preset6Button = tk.Button(PresetFrame, textvariable = Preset6Var, wraplength = 75, command = lambda: SetPresetNum(6),
                    width = 11, height = 3, bg=PresetColor6.get())
-Preset7Button = tk.Button(PresetFrame, textvariable = Preset7Var, wraplength = 75, command = SetPreset7,
+Preset7Button = tk.Button(PresetFrame, textvariable = Preset7Var, wraplength = 75, command = lambda: SetPresetNum(7),
                    width = 11, height = 3, bg=PresetColor7.get())
-Preset8Button = tk.Button(PresetFrame, textvariable = Preset8Var, wraplength = 75, command = SetPreset8,
+Preset8Button = tk.Button(PresetFrame, textvariable = Preset8Var, wraplength = 75, command = lambda: SetPresetNum(8),
                    width = 11, height = 3, bg=PresetColor8.get())
-Preset9Button = tk.Button(PresetFrame, textvariable = Preset9Var, wraplength = 75, command = SetPreset9,
+Preset9Button = tk.Button(PresetFrame, textvariable = Preset9Var, wraplength = 75, command = lambda: SetPresetNum(9),
                    width = 11, height = 3, bg=PresetColor9.get())
-Preset10Button = tk.Button(PresetFrame, textvariable = Preset10Var, wraplength = 75, command = SetPreset10,
+Preset10Button = tk.Button(PresetFrame, textvariable = Preset10Var, wraplength = 75, command = lambda: SetPresetNum(10),
                    width = 11, height = 3, bg=PresetColor10.get())
 
 ColorButton = tk.Button(RandomNPCFrame,text="Color Menu",bg = Color0.get(),command=ColorGUI,height=3,width=10)
