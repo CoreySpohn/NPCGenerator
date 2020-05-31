@@ -20,10 +20,23 @@
       <x>240</x>
       <y>100</y>
       <width>331</width>
-      <height>341</height>
+      <height>376</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
+     <item row="2" column="1">
+      <widget class="QTextEdit" name="age_text"/>
+     </item>
+     <item row="3" column="0">
+      <widget class="QPushButton" name="gender_button">
+       <property name="text">
+        <string>Gender</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QTextEdit" name="name_text"/>
+     </item>
      <item row="0" column="0">
       <widget class="QPushButton" name="name_button">
        <property name="text">
@@ -31,15 +44,35 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="1">
-      <widget class="QLabel" name="name_label">
+     <item row="4" column="1">
+      <widget class="QTextEdit" name="motivation_text"/>
+     </item>
+     <item row="3" column="1">
+      <widget class="QTextEdit" name="gender_text"/>
+     </item>
+     <item row="2" column="0">
+      <widget class="QPushButton" name="age_button">
        <property name="text">
-        <string>Name</string>
+        <string>Age</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QPushButton" name="motivation_button">
+       <property name="text">
+        <string>Motivation</string>
        </property>
       </widget>
      </item>
      <item row="1" column="0">
-      <widget class="QLineEdit" name="lineEdit"/>
+      <widget class="QPushButton" name="race_button">
+       <property name="text">
+        <string>Race</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QTextEdit" name="race_text"/>
      </item>
     </layout>
    </widget>
@@ -57,22 +90,5 @@
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
- <connections>
-  <connection>
-   <sender>lineEdit</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>name_label</receiver>
-   <slot>setText(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>381</x>
-     <y>354</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>549</x>
-     <y>229</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

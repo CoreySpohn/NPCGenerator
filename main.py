@@ -11,14 +11,28 @@ class MyApp(QMainWindow):
         super(MyApp, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.npc = NPC()
-        self.ui.name_button.clicked.connect(self.set_name)
 
+        self.npc = NPC([1])
+        self.ui.name_button.clicked.connect(self.set_name)
+        self.ui.race_button.clicked.connect(self.set_race)
+        self.ui.age_button.clicked.connect(self.set_age)
+
+
+    def set_box(self, button, box):
+        self.ui.button.clicked.connect(box.setText('Test'))
 
     def set_name(self):
-        name = self.npc.name
-        self.ui.name_label.setText(name)
+        self.npc.gen_name()
+        self.ui.name_text.setText(self.npc.name)
 
+    def set_race(self):
+        self.npc.gen_race()
+        # self.ui.name_text.setText(self.npc.race.race)
+        self.ui.race_text.setText(str(self.npc.race.race))
+
+    def set_age(self):
+        self.npc.gen_age()
+        self.ui.age_text.setText(str(self.npc.age))
 
 
 if __name__ == "__main__":
