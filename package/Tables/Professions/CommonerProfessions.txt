@@ -1,0 +1,45 @@
+Actor
+Appraiser
+Baker
+Barber
+Banker
+Barkeep
+Banker
+Beggar
+Butcher
+Coiffeur (hairdresser)
+Cook
+Doctor
+Enbalmer
+Entertainer/performer
+Explorer
+Herbalist
+Iceseller
+Innkeeper
+Laborer
+Launderer
+Maid
+Masseuse
+Matchmaker
+Merchant
+Midwife
+Minstrel
+Navigator
+Nurse
+Physican
+Polisher/cleaner
+Privateer
+Prospector
+Scribe
+Ship captain
+Stablehand
+Street seller
+Surgeon
+Surveyor
+Tavernkeeper
+Town crier
+Treasure hunter
+Valet (personal assistant)
+Vendor
+Veterinarian
+Wetnurse

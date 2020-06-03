@@ -1,0 +1,20 @@
+the docks
+the palace
+the crafts guild
+the mages guild
+the brothel
+the merchant quarter
+the tavern
+the prison
+the museum
+the asylum
+the library
+the barracks
+the gatehouse
+the bridge
+the temple
+the market square
+the warehouse district
+the garden district
+the lighthouse
+the riverfront

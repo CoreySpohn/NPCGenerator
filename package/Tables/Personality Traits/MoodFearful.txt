@@ -1,0 +1,12 @@
+Threatened: Exposed
+Threatened: Nervous
+Rejected: Persecuted
+Rejected: Excluded
+Weak: Insignificant
+Weak: Worthless
+Insecure: Inferior
+Insecure: Inadequate
+Anxious: Worried
+Anxious: Overwhelmed
+Scared: Frightened
+Scared: Helpless

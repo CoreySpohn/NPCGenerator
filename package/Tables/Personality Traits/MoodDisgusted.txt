@@ -1,0 +1,8 @@
+Repelled: Hesitant
+Repelled: Horrified
+Awful: Detestable
+Awful: Nauseated
+Disappointed: Revolted
+Disappointed: Appalled
+Disapproving: Embarrassed
+Disapproving: Judgmental

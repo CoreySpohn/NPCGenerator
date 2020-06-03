@@ -1,0 +1,22 @@
+awaken a sleeping NPC
+awaken a sleeping NPC
+awaken a sleeping NPC
+recover artifact(c1)
+recover artifact(c1)
+destroy artifact(c1)
+destroy artifact(c1)
+aid or slay an NPC
+aid or slay an NPC
+aid or slay an NPC
+slay a monster
+slay a monster
+slay a monster
+liberate an NPC
+enslave an NPC
+enslave an NPC
+liberate an NPC
+discover a lost foreign land
+discover a lost foreign land
+discover a lost foreign land
+save the world
+destroy the world

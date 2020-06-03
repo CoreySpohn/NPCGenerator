@@ -1,0 +1,7 @@
+Baron
+King
+Lady
+Lord
+Noble
+Queen
+Steward

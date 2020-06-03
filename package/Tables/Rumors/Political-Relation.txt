@@ -1,0 +1,24 @@
+self
+parent
+grandparent
+sibling
+best friend
+trusted adviser
+child
+cousin
+aunt
+uncle
+spouse
+courtesan
+personal guard
+nephew
+niece
+mistress
+lover
+rival
+handmaiden
+servant
+secret lover
+jester
+doctor
+cook

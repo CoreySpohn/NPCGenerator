@@ -1,0 +1,14 @@
+Archbishop
+Cultist
+Chaplain
+Cleric
+Healer
+Martyr
+Minister
+Monk
+Nun
+Priest
+Reverend
+Sage
+Saint
+Shaman

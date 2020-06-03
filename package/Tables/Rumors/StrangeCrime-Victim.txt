@@ -1,0 +1,20 @@
+man
+woman
+craftsman
+guard
+noble
+slave
+servant
+child
+lord
+mage
+priest
+merchant
+thief
+assassin
+officer
+hobo
+prostitute
+criminal
+art collector
+archivist

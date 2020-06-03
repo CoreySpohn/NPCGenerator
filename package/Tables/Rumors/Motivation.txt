@@ -1,0 +1,22 @@
+The NPC is on the run after ontherun(j) minorenemy(q) for evildeeds(p).
+The NPC is on the run after ontherun(j) majorenemy(r) for evildeeds(p).
+The NPC is on the run after ontherun(j) minorenemy(q) for gooddeeds(o).
+vendetta(i) majorenemy(r).
+vendetta(i) majorenemy(r).
+vendetta(i) minorenemy(q).
+vendetta(i) minorenemy(q).
+The NPC personalinformation(a).
+The NPC localinformation(b).
+The NPC is searching for iteminformation(c).
+The NPC is selling buyingorselling(k) at a nearby location, then returning to his/her home in home(l).
+The NPC is buying buyingorselling(k) at a nearby location, then returning to his/her home in home(l).
+The NPC is buying and selling buyingorselling(k) at a nearby location, then returning to his/her home in home(l).
+The NPC is on a local quest to minorquest(m) for a treasure(u).
+The NPC is on a local quest to minorquest(m) for a treasure(u).
+The NPC is on a local quest to minorquest(m) for a treasure(u).
+The NPC is on a quest to majorquest(n) for minorenemy(q).
+The NPC is on a quest to minorquest(m) for minorenemy(q).
+The NPC is on a quest to minorquest(m) for majorenemy(r).
+The NPC is on a quest to majorquest(n) for majorenemy(r).
+The NPC is on a quest to minorquest(m) for a treasure(u).
+The NPC is on a quest to majorquest(n) for a treasure(u).

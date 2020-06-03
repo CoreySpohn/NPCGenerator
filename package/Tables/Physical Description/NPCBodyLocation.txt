@@ -1,0 +1,11 @@
+Head
+Face
+Neck
+Chest
+Back
+Stomach
+Waist
+Right arm
+Left arm
+Right leg
+Left leg

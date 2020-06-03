@@ -1,0 +1,11 @@
+a dagger
+a spear
+an axe
+a sword
+a flail
+a hammer
+a bow
+a crossbow
+a bolt
+an arrow
+an exotic weapon

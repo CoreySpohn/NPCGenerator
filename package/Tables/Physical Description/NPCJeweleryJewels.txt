@@ -1,0 +1,12 @@
+Amethyst
+Crystal
+Diamond
+Emerald
+Jade
+Obsidian
+Opal
+Pearl
+Ruby
+Sapphire
+Topaz
+Turquoise

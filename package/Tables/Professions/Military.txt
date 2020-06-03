@@ -1,0 +1,11 @@
+Archer
+General
+Gladiator
+Guard
+Infantry
+Jailer
+Knight
+Officer
+Soldier
+Squire
+Torturer
