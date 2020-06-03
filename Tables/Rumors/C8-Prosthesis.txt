@@ -1,6 +1,0 @@
-prosthetic arm
-prosthetic eye
-prosthetic foot
-prosthetic hand
-prosthetic heart
-prosthetic leg

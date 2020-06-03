@@ -1,6 +1,0 @@
-rod
-staff
-wand
-sceptre
-crown
-gemstone

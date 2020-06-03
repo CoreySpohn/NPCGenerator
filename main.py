@@ -1,7 +1,7 @@
 import sys
 from PyQt5.QtWidgets import QMainWindow, QApplication
 from PyQt5 import uic
-from package.NPC import NPC
+from package.NPC.NPC import NPC
 
 Ui_MainWindow, QtBaseClass = uic.loadUiType("package/mainwindow.ui")
 
@@ -14,21 +14,21 @@ class MyApp(QMainWindow):
 
         self.npc = NPC([1])
         self.ui.name_button.clicked.connect(self.set_name)
+        self.ui.gender_button.clicked.connect(self.set_gender)
         self.ui.race_button.clicked.connect(self.set_race)
         self.ui.age_button.clicked.connect(self.set_age)
-
-
-    def set_box(self, button, box):
-        self.ui.button.clicked.connect(box.setText('Test'))
 
     def set_name(self):
         self.npc.gen_name()
         self.ui.name_text.setText(self.npc.name)
 
+    def set_gender(self):
+        self.npc.gen_gender()
+        self.ui.gender_text.setText(self.npc.gender)
+
     def set_race(self):
         self.npc.gen_race()
-        # self.ui.name_text.setText(self.npc.race.race)
-        self.ui.race_text.setText(str(self.npc.race.race))
+        self.ui.race_text.setText(self.npc.race.race)
 
     def set_age(self):
         self.npc.gen_age()

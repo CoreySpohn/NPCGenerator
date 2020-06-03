@@ -1,8 +1,0 @@
-Startled: Shocked
-Startled: Dismayed
-Confused: Disillusioned
-Confused: Perplexed
-Amazed: Astonished
-Amazed: Awe
-Excited: Eager
-Excited: Energetic
