@@ -12,7 +12,7 @@ class MyApp(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
-        self.npc = NPC([1])
+        self.npc = NPC()
         self.ui.name_button.clicked.connect(self.set_name)
         self.ui.gender_button.clicked.connect(self.set_gender)
         self.ui.race_button.clicked.connect(self.set_race)

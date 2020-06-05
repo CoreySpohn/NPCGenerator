@@ -91,6 +91,6 @@ class NameGenerator:
     def generate(self):
         return ''.join(self.model.generate())
 
-file = np.genfromtxt('elves.txt', delimiter=',', dtype=str)
-human_generator = NameGenerator(file)
-print(human_generator.generate())
+# file = np.genfromtxt('elves.txt', delimiter=',', dtype=str)
+# human_generator = NameGenerator(file)
+# print(human_generator.generate())
