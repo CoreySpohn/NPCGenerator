@@ -1,0 +1,16 @@
+{
+	"races":[
+		{
+			"race": "Human",
+			"max_age": 90,
+			"names": "Cecille,Marius,Hadler,Mohance,Valena,Erinica,Mohamer,Lilas,Landriana,Kayliett,Nathance,Jaelan,Grego,Rylina,Milana,Edwardo,Rosephen,Kathew,Jaide,Vincoln,Georgan,Hanna,Oma,Calie,Arabeth,Jeffred,Fernandyn,Harmondy,Davierce,Penesiree,Ethaniyah,Malla,Mika,Jadelanie,Valey,Lawrenis,Hunte,Kateo,Gaelynn,Cynthony,Brennikaelyn,Lince,Bryana,Dust,IUriel,Jonard,Chasey,Nadisy,Kenna,Diegory,Jaimena,Cequinn,Laily,Marionahim,Carsha,Melaina,Brael,Ismaelyn,Estrelly,Micardo,Lincolas,OmaQuinton,Arthur,Lucilla,Kellas,Larrentin,Melodh,Kaitlina,Makenzo,Tatian,Ismaelyn,Maxwelle,Moisella,Tris,Sier,Mollys,Luca,Haydon,Viviana,Addisy,Connedy,Colter,Maurick,RoberlyDari,Damondon,Quenton,Valey,Elison,Nayelicia,Cathanna,Summeron,Ales,Randa,Arian,Dayan,Elison,Lela,Collyssando,Jaley,Micholas,Valeb,Madalla",
+			"odds": 0.5
+		},
+		{
+			"race": "Elf",
+			"max_age": 90,
+			"names": "Orodda,SarWill,Galand,Teleg,Ancalin,Erendomiel,Palas,Deór,Sirion,Arth,Grishnárion,Calemmakil,Calimeldë,Aiwen,Gildeson,Celeg,Ad?n,Glauredhelion,ElfheloOlwë,Finvassion,Glanor,Eldar,Shel,GhFinrodredegar,Faladin,Handar,Malandacil,Olóin,Calingolodh,Duil,Arant,Turambaval,Adra?riel,Elendacarion,Antar,Rúmendir,Mahtanatar,Goth,Mahtar,Lagdush,Npher,Meriën,Thor,Bryrbur,Belethoregon,Faranc,Dernhee,Aragon,Aerië,Borondomiel,Argot,Aravann-bur,Hirgothain,Fingollum,Sakalthôn,Herungon,Imras,Deôn,Lobel,Erador,Fanimeldur,Aiw?in,Bellador,Gwine,Eldarin,Ardamir,Ilúk,Ardang,Thróin,Telcharn,Farach,Hyaar,Magol,Fengeleg,Zimroth,Sm?lfwine,Hirion,Nessar,Zimroth,LothmoBaldad,Handar,Sarumor,Maggothmog,Wal?rendis,Treebeardang,Gormadowfaxurín,Magginsilmo,Mahtar,Elfwingol,Eärnu?rnil,Cast,Barandis,Mu?ma,Tindur,Anfaug,Dorlimon,Sadowfax,Malbo,Erestoher,Déod",
+			"odds": 0.5
+		}
+	]
+}

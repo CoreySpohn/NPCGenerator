@@ -1,0 +1,16 @@
+{
+	"races":[
+		{
+			"race": "Human",
+			"max_age": 90,
+			"names": "Cecille,Marius,Hadler,Mohance,Valena,Erinica,Mohamer,Lilas,Landriana,Kayliett,Nathance,Jaelan,Grego,Rylina,Milana,Edwardo,Rosephen,Kathew,Jaide,Vincoln,Georgan,Hanna,Oma,Calie,Arabeth,Jeffred,Fernandyn,Harmondy,Davierce,Penesiree,Ethaniyah,Malla,Mika,Jadelanie,Valey,Lawrenis,Hunte,Kateo,Gaelynn,Cynthony,Brennikaelyn,Lince,Bryana,Dust,IUriel,Jonard,Chasey,Nadisy,Kenna,Diegory,Jaimena,Cequinn,Laily,Marionahim,Carsha,Melaina,Brael,Ismaelyn,Estrelly,Micardo,Lincolas,OmaQuinton,Arthur,Lucilla,Kellas,Larrentin,Melodh,Kaitlina,Makenzo,Tatian,Ismaelyn,Maxwelle,Moisella,Tris,Sier,Mollys,Luca,Haydon,Viviana,Addisy,Connedy,Colter,Maurick,RoberlyDari,Damondon,Quenton,Valey,Elison,Nayelicia,Cathanna,Summeron,Ales,Randa,Arian,Dayan,Elison,Lela,Collyssando,Jaley,Micholas,Valeb,Madalla",
+			"odds": 0.5
+		}
+		{
+			"race": "Human",
+			"max_age": 90,
+			"names": "Cecille,Marius,Hadler,Mohance,Valena,Erinica,Mohamer,Lilas,Landriana,Kayliett,Nathance,Jaelan,Grego,Rylina,Milana,Edwardo,Rosephen,Kathew,Jaide,Vincoln,Georgan,Hanna,Oma,Calie,Arabeth,Jeffred,Fernandyn,Harmondy,Davierce,Penesiree,Ethaniyah,Malla,Mika,Jadelanie,Valey,Lawrenis,Hunte,Kateo,Gaelynn,Cynthony,Brennikaelyn,Lince,Bryana,Dust,IUriel,Jonard,Chasey,Nadisy,Kenna,Diegory,Jaimena,Cequinn,Laily,Marionahim,Carsha,Melaina,Brael,Ismaelyn,Estrelly,Micardo,Lincolas,OmaQuinton,Arthur,Lucilla,Kellas,Larrentin,Melodh,Kaitlina,Makenzo,Tatian,Ismaelyn,Maxwelle,Moisella,Tris,Sier,Mollys,Luca,Haydon,Viviana,Addisy,Connedy,Colter,Maurick,RoberlyDari,Damondon,Quenton,Valey,Elison,Nayelicia,Cathanna,Summeron,Ales,Randa,Arian,Dayan,Elison,Lela,Collyssando,Jaley,Micholas,Valeb,Madalla",
+			"odds": 0.5
+		}
+	]
+}
